@@ -1,5 +1,5 @@
 import { createArticle } from './article'
-import { mockArticles } from './article.mock'
+import { mockArticle } from './article.mock'
 
 describe('createArticle', () => {
   test('fails on too short body', () => {
@@ -7,7 +7,7 @@ describe('createArticle', () => {
 
     expect(() => {
       createArticle({
-        ...mockArticles()[0],
+        ...mockArticle(),
         body: tooShortBody
       })
     }).toThrow()

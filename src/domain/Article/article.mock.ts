@@ -1,5 +1,14 @@
 import { Article } from './article.types'
 
+export const mockArticle = (): Article => ({
+  title: 'lorem ipsum',
+  description: 'lorem ipsum',
+  slug: 'lorem-ipsum',
+  body: 'lorem ipsum',
+  createdAt: new Date(2009, 3, 4),
+  favorited: false
+})
+
 export const mockArticles = (): Article[] => [
   {
     title: 'lorem ipsum',
