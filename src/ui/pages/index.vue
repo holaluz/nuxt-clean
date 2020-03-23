@@ -1,32 +1,37 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="title">
-        nuxt-clean
-      </h1>
-      <h2 class="subtitle">
-        My pioneering Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <h1 class="title">nuxt-clean</h1>
+      <p v-if="error">{{ error }}</p>
+      <p v-else-if="loading">{{ loading }}</p>
+      <add-article-form v-else @submit="handleSubmit" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { mapState, mapActions } from 'vuex'
 import Vue from 'vue'
+import AddArticleForm from '../components/AddArticleForm.vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: {
+    AddArticleForm
+  },
+
+  computed: {
+    ...mapState('article', ['loading', 'error'])
+  },
+
+  methods: {
+    ...mapActions('article', ['createArticle']),
+
+    // @ts-ignore
+    handleSubmit(formValues) {
+      this.createArticle(formValues)
+    }
+  }
+})
 </script>
 
 <style>
@@ -47,17 +52,5 @@ export default Vue.extend({})
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
