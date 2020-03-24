@@ -1,9 +1,9 @@
-import { User } from '@/domain/User'
+import { User } from '@domain/User'
 import {
   ArticleRepository,
   EditingArticle,
   createArticle
-} from '@/domain/Article'
+} from '@domain/Article'
 
 type Services = {
   apiService: any // ??

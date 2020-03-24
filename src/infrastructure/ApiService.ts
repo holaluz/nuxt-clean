@@ -1,5 +1,5 @@
 import Axios, { AxiosRequestConfig } from 'axios'
-import { User } from '@/domain/User'
+import { User } from '@domain/User'
 
 const API_URL: string = process.env.API_URL || ''
 

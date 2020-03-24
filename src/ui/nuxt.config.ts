@@ -1,4 +1,7 @@
+import path from 'path'
 import { Configuration } from '@nuxt/types'
+
+// const join = (p: string) => path.join(this.options.rootDir, p)
 
 const config: Configuration = {
   mode: 'spa',
@@ -38,7 +41,23 @@ const config: Configuration = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {}
+  axios: {},
+
+  build: {
+    extend(config) {
+      // @ts-ignore
+      const rootDir = this.buildContext.options.rootDir
+      const join = (p: string) => path.join(rootDir, 'src', p)
+      // @ts-ignore
+      config.resolve.alias['@domain'] = join('domain')
+      // @ts-ignore
+      config.resolve.alias['@application'] = join('application')
+      // @ts-ignore
+      config.resolve.alias['@infrastructure'] = join('infrastructure')
+      // @ts-ignore
+      config.resolve.alias['@ui'] = join('ui')
+    }
+  }
 }
 
 export default config

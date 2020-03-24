@@ -1,5 +1,5 @@
-import { User } from '../../domain/User'
-import { Article, ArticleRepository } from '@/domain/Article'
+import { User } from '@domain/User'
+import { Article, ArticleRepository } from '@domain/Article'
 
 type Parameters = {
   editingArticle: Article
