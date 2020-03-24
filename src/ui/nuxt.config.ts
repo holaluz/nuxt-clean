@@ -1,8 +1,6 @@
 import path from 'path'
 import { Configuration } from '@nuxt/types'
 
-// const join = (p: string) => path.join(this.options.rootDir, p)
-
 const config: Configuration = {
   mode: 'spa',
 
