@@ -5,10 +5,10 @@
   "author": "Adrià Fontcuberta",
   "private": true,
   "scripts": {
-    "dev": "nuxt src/ui",
-    "build": "nuxt build src/ui",
-    "start": "nuxt start src/ui",
-    "generate": "nuxt generate src/ui",
+    "dev": "nuxt-ts src/ui --tsconfig .",
+    "build": "nuxt-ts build src/ui --tsconfig .",
+    "start": "nuxt-ts start src/ui --tsconfig .",
+    "generate": "nuxt-ts generate src/ui --tsconfig .",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest"
   },
@@ -21,8 +21,9 @@
     }
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
-    "@nuxtjs/axios": "^5.3.6"
+    "@nuxt/typescript-runtime": "^0.4.0",
+    "@nuxtjs/axios": "^5.3.6",
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

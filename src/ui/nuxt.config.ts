@@ -1,5 +1,10 @@
-export default {
+import { Configuration } from '@nuxt/types'
+
+const config: Configuration = {
   mode: 'spa',
+
+  srcDir: '.',
+
   /*
    ** Headers of the page
    */
@@ -33,3 +38,5 @@ export default {
    */
   axios: {}
 }
+
+export default config
