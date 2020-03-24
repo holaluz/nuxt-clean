@@ -3,7 +3,9 @@ import { Configuration } from '@nuxt/types'
 const config: Configuration = {
   mode: 'spa',
 
-  srcDir: '.',
+  rootDir: '.',
+
+  srcDir: 'src/ui',
 
   /*
    ** Headers of the page

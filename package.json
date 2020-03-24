@@ -9,7 +9,7 @@
     "build": "nuxt-ts build src/ui --tsconfig .",
     "start": "nuxt-ts start src/ui --tsconfig .",
     "generate": "nuxt-ts generate src/ui --tsconfig .",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "test": "jest"
   },
   "lint-staged": {
