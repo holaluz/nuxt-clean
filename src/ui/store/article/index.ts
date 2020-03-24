@@ -1,6 +1,6 @@
 import { ARTICLE } from './mutationTypes'
-import { createArticle } from '@/container'
 import { Article } from '@/domain/Article'
+import { createArticle } from '@/container'
 
 type State = {
   loading: boolean
@@ -8,13 +8,13 @@ type State = {
   error: string | null
 }
 
-const state: State = {
+export const state = (): State => ({
   loading: false,
   articles: [],
   error: null
-}
+})
 
-const mutations = {
+export const mutations = {
   [ARTICLE.CREATE_ARTICLE_REQUEST](state: State) {
     state.loading = true
     state.error = null
@@ -32,7 +32,7 @@ const mutations = {
   }
 }
 
-const actions = {
+export const actions = {
   // Can I fix the "any"? Not that it matter much, but
   createArticle({ rootState, commit }: any, editingArticle: Article) {
     commit(ARTICLE.CREATE_ARTICLE_REQUEST)
@@ -59,10 +59,4 @@ const actions = {
       }
     )
   }
-}
-
-export default {
-  state,
-  mutations,
-  actions
 }
