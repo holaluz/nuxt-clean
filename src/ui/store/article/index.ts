@@ -1,66 +1,70 @@
+import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { Article } from '@domain/Article'
 import { createArticle } from '@@/src/container'
 import { ARTICLE } from './mutationTypes'
 
-type State = {
-  loading: boolean
-  articles: Array<Article>
-  error: string | null
-}
-
-export const state = (): State => ({
+export const state = () => ({
   loading: false,
-  articles: [],
-  error: null
+  articles: [] as Article[],
+  error: null as string | null,
 })
 
-export const mutations = {
-  [ARTICLE.CREATE_ARTICLE_REQUEST](state: State) {
+export type RootState = ReturnType<typeof state>
+
+export const mutations: MutationTree<RootState> = {
+  [ARTICLE.CREATE_ARTICLE_REQUEST](state) {
     state.loading = true
     state.error = null
   },
 
-  [ARTICLE.CREATE_ARTICLE_SUCCESS](state: State, article: Article) {
+  [ARTICLE.CREATE_ARTICLE_SUCCESS](state, article: Article) {
     state.loading = false
     state.error = null
     state.articles = [...state.articles, article]
   },
 
-  [ARTICLE.CREATE_ARTICLE_ERROR](state: State, error: string) {
+  [ARTICLE.CREATE_ARTICLE_ERROR](state, error: string) {
     state.loading = false
     state.error = error
-  }
+  },
 }
 
-export const actions = {
-  // Can I fix the "any"? Not that it matter much, but
-  createArticle({ commit }: any, editingArticle: Article) {
+export const getters: GetterTree<RootState, RootState> = {
+  totalArticles: (state) => state.articles.length,
+}
+
+export const actions: ActionTree<RootState, RootState> = {
+  createArticle({ commit }, editingArticle: Article) {
     commit(ARTICLE.CREATE_ARTICLE_REQUEST)
 
     const user = {
       email: 'email',
       token: 'token',
-      username: 'username'
+      username: 'username',
     }
 
     createArticle.execute(
       { editingArticle, user },
       {
-        respondWithSuccess: (article) =>
-          commit(ARTICLE.CREATE_ARTICLE_SUCCESS, article),
+        respondWithSuccess: (article) => {
+          commit(ARTICLE.CREATE_ARTICLE_SUCCESS, article)
+        },
 
-        respondWithError: (error) =>
-          commit(ARTICLE.CREATE_ARTICLE_ERROR, `Unknown error: ${error}`),
+        respondWithError: (error) => {
+          commit(ARTICLE.CREATE_ARTICLE_ERROR, `Unknown error: ${error}`)
+        },
 
-        respondWithApiError: (error) =>
-          commit(ARTICLE.CREATE_ARTICLE_ERROR, `Oops! Server failed: ${error}`),
+        respondWithApiError: (error) => {
+          commit(ARTICLE.CREATE_ARTICLE_ERROR, `Oops! Server failed: ${error}`)
+        },
 
-        respondWithInvalidParam: (error) =>
+        respondWithInvalidParam: (error) => {
           commit(
             ARTICLE.CREATE_ARTICLE_ERROR,
             `Your request is somewhat wrong: ${error}`
           )
+        },
       }
     )
-  }
+  },
 }

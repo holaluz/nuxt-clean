@@ -8,7 +8,7 @@ describe('createArticle', () => {
     expect(() => {
       createArticle({
         ...mockArticle(),
-        body: tooShortBody
+        body: tooShortBody,
       })
     }).toThrow()
   })

@@ -16,21 +16,20 @@ import AddArticleForm from '../components/AddArticleForm.vue'
 
 export default Vue.extend({
   components: {
-    AddArticleForm
+    AddArticleForm,
   },
 
   computed: {
-    ...mapState('article', ['loading', 'error'])
+    ...mapState('article', ['loading', 'error']),
   },
 
   methods: {
     ...mapActions('article', ['createArticle']),
 
-    // @ts-ignore
-    handleSubmit(formValues) {
+    handleSubmit(formValues: unknown) {
       this.createArticle(formValues)
-    }
-  }
+    },
+  },
 })
 </script>
 

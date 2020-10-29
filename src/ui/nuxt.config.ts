@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import path from 'path'
-import { Configuration } from '@nuxt/types'
+import { NuxtConfig } from '@nuxt/types'
 
-const config: Configuration = {
+const config: NuxtConfig = {
   mode: 'spa',
 
   rootDir: '.',
@@ -19,10 +20,10 @@ const config: Configuration = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: process.env.npm_package_description || '',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
    ** Nuxt.js dev-modules
@@ -33,7 +34,7 @@ const config: Configuration = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
   ],
   /*
    ** Axios module configuration
@@ -42,7 +43,7 @@ const config: Configuration = {
   axios: {},
 
   build: {
-    extend(config) {
+    extend(config: any) {
       // @ts-ignore
       const rootDir = this.buildContext.options.rootDir
       const join = (p: string) => path.join(rootDir, 'src', p)
@@ -54,8 +55,8 @@ const config: Configuration = {
       config.resolve.alias['@infrastructure'] = join('infrastructure')
       // @ts-ignore
       config.resolve.alias['@ui'] = join('ui')
-    }
-  }
+    },
+  },
 }
 
 export default config

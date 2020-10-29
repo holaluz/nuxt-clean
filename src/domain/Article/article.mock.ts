@@ -6,7 +6,7 @@ export const mockArticle = (): Article => ({
   slug: 'lorem-ipsum',
   body: 'lorem ipsum',
   createdAt: new Date(2009, 3, 4),
-  favorited: false
+  favorited: false,
 })
 
 export const mockArticles = (): Article[] => [
@@ -16,7 +16,7 @@ export const mockArticles = (): Article[] => [
     slug: 'lorem-ipsum',
     body: 'lorem ipsum',
     createdAt: new Date(2009, 3, 4),
-    favorited: false
+    favorited: false,
   },
   {
     title: 'dolor sit amet',
@@ -24,6 +24,6 @@ export const mockArticles = (): Article[] => [
     slug: 'dolor-sit-amet',
     body: 'dolor sit amet',
     createdAt: '2020-02-15T09:00:00 +01:00',
-    favorited: true
-  }
+    favorited: true,
+  },
 ]

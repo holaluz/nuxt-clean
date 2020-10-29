@@ -12,15 +12,15 @@ type RequestWithoutData = (
 type RequestWithData = (
   url: string,
   user: User,
-  data: object,
+  data: Record<string, unknown>,
   options: Options
 ) => Promise<any>
 
 const axios = Axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 })
 
 const get: RequestWithoutData = (url, user, options = {}) =>
@@ -34,8 +34,8 @@ function addToken(options: Options, user: User): Options {
     ...options,
     headers: {
       ...options.headers,
-      Authorization: `Token ${user.token}`
-    }
+      Authorization: `Token ${user.token}`,
+    },
   }
 }
 

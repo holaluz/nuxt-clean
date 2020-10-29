@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2018",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
     ],
+    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
-    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "~/*": [ "./src/ui/*" ],
@@ -23,7 +23,7 @@
       "@domain/*": [ "./src/domain/*" ],
       "@application/*": [ "./src/application/*" ],
       "@infrastructure/*": [ "./src/infrastructure/*" ],
-      "@ui/*": [ "./src/ui/*" ],
+      "@ui/*": [ "./src/ui/*" ]
     },
     "types": [
       "jest",

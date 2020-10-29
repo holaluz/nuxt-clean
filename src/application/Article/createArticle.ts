@@ -18,7 +18,7 @@ type Repositories = {
 }
 
 function createArticle({
-  articleRepository
+  articleRepository,
 }: Repositories): UseCase<Parameters, Callbacks> {
   return { execute }
 
@@ -28,7 +28,7 @@ function createArticle({
       respondWithSuccess,
       respondWithError,
       respondWithApiError,
-      respondWithInvalidParam
+      respondWithInvalidParam,
     }: Callbacks
   ) {
     try {

@@ -2,7 +2,7 @@ import { User } from '@domain/User'
 import {
   ArticleRepository,
   EditingArticle,
-  createArticle
+  createArticle,
 } from '@domain/Article'
 
 type Services = {
@@ -12,7 +12,7 @@ type Services = {
 function articleRepository({ apiService }: Services): ArticleRepository {
   return {
     get,
-    add
+    add,
   }
 
   async function get(id: string, user: User) {
@@ -23,7 +23,7 @@ function articleRepository({ apiService }: Services): ArticleRepository {
 
   async function add(article: EditingArticle, user: User) {
     const { data: rawArticle } = await apiService.post('/articles', user, {
-      article
+      article,
     })
 
     return createArticle(rawArticle)

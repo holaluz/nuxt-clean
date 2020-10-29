@@ -23,9 +23,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import AddArticleFormInput from './AddArticleFormInput.vue'
 
 export default Vue.extend({
   name: 'AddArticleForm',
+
+  components: {
+    // AddArticleFormInput,
+  },
 
   data() {
     return {
@@ -34,16 +39,16 @@ export default Vue.extend({
         description: null,
         slug: null,
         body: null,
-        createdAt: null
-      }
+        createdAt: null,
+      },
     }
   },
 
   methods: {
     handleSubmit() {
       this.$emit('submit', this.form)
-    }
-  }
+    },
+  },
 })
 </script>
 
