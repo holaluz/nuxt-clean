@@ -1,55 +1,59 @@
-import { User } from '@domain/User'
-import { Article, ArticleRepository } from '@domain/Article'
+/* eslint-disable no-console */
+import { EditingArticle, IArticleRepository } from '@domain/Article'
+import * as HttpErrors from '@@/src/shared/HttpErrors'
+import { IHttpError } from '@@/src/shared/HttpErrors'
 
 type Parameters = {
-  editingArticle: Article
-  user: User
+  editingArticle: EditingArticle
+}
+
+type Services = {
+  articleService: IArticleRepository
 }
 
 type Callbacks = {
-  respondWithSuccess(article: Article): void
-  respondWithError(error: Error): void
-  respondWithApiError(error: Error): void
-  respondWithInvalidParam(error: Error): void
+  respondWithSuccess: () => void
+  respondWithClientError: (e: IHttpError) => void
+  respondWithServerError: (e: IHttpError) => void
+  respondWithGenericError: (e: Error) => void
 }
 
-type Repositories = {
-  articleRepository: ArticleRepository
-}
-
-function createArticle({
-  articleRepository,
-}: Repositories): UseCase<Parameters, Callbacks> {
+export function createArticle({
+  articleService,
+}: Services): UseCase<Parameters, Callbacks> {
   return { execute }
 
   async function execute(
-    { editingArticle, user }: Parameters,
+    { editingArticle }: Parameters,
     {
       respondWithSuccess,
-      respondWithError,
-      respondWithApiError,
-      respondWithInvalidParam,
+      respondWithClientError,
+      respondWithServerError,
+      respondWithGenericError,
     }: Callbacks
   ) {
-    try {
-      const article = await articleRepository.add(editingArticle, user)
+    const result = await articleService.createArticle({
+      ...editingArticle,
+      createdAt: new Date(),
+    })
 
-      respondWithSuccess(article)
-    } catch (error) {
-      // if (error instanceof UserError) {
-      //   respondWithInvalidParam(error.message)
-      //   return
-      // }
-      // if (error instanceof ApiError) {
-      //   respondWithApiError(error)
-      //   return
-      // }
-      respondWithInvalidParam(error.message)
-      respondWithApiError(error)
+    if (result.isErr()) {
+      const error = result.error
 
-      respondWithError(error)
+      if (!HttpErrors.isHttpError(error)) {
+        respondWithGenericError(error)
+        return
+      }
+
+      if (error.isClientError()) {
+        respondWithClientError(error)
+        return
+      }
+
+      respondWithServerError(error)
+      return
     }
+
+    respondWithSuccess()
   }
 }
-
-export { createArticle }

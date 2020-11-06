@@ -1,42 +1,72 @@
-import Axios, { AxiosRequestConfig } from 'axios'
-import { User } from '@domain/User'
+import { HttpClient } from '../shared/HttpClient'
+import { IHttpError, HttpError, isHttpError } from '../shared/HttpErrors'
+import { ApiResult } from '../shared/ApiResponse'
+import { err, ok } from '../shared/Result'
 
-const API_URL: string = process.env.API_URL || ''
-
-type Options = AxiosRequestConfig
-type RequestWithoutData = (
-  url: string,
-  user: User,
-  options: Options
-) => Promise<any>
-type RequestWithData = (
-  url: string,
-  user: User,
-  data: Record<string, unknown>,
-  options: Options
-) => Promise<any>
-
-const axios = Axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-
-const get: RequestWithoutData = (url, user, options = {}) =>
-  axios.get(url, addToken(options, user))
-
-const post: RequestWithData = (url, user, data = {}, options = {}) =>
-  axios.post(url, data, addToken(options, user))
-
-function addToken(options: Options, user: User): Options {
-  return {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Token ${user.token}`,
-    },
-  }
+export interface Params {
+  [key: string]: unknown
 }
 
-export { post, get }
+export interface Data {
+  [key: string]: unknown
+}
+
+interface IRequestWithoutData {
+  url: string
+  params?: Params
+}
+
+interface IRequestWithData {
+  url: string
+  params?: Params
+  data?: Data
+}
+
+export interface IApiService {
+  get<T>(request: IRequestWithoutData): Promise<ApiResult<T>>
+  post<T>(request: IRequestWithData): Promise<ApiResult<T>>
+}
+
+// We'll need to add support for additional config
+export class ApiService extends HttpClient implements IApiService {
+  public constructor() {
+    // This should come from a dotenv
+    super('https://httpstat.us')
+  }
+
+  public async get<T>(request: IRequestWithoutData): Promise<ApiResult<T>> {
+    try {
+      const response = await this.httpService.request<T>({
+        method: 'GET',
+        ...request,
+      })
+
+      return ok(response.data)
+    } catch (error) {
+      return err(this.handleError(error))
+    }
+  }
+
+  public async post<T>(request: IRequestWithData): Promise<ApiResult<T>> {
+    try {
+      const response = await this.httpService.request<T>({
+        method: 'POST',
+        ...request,
+      })
+
+      return ok(response.data)
+    } catch (error) {
+      return err(this.handleError(error))
+    }
+  }
+
+  private handleError(error: HttpError | Error): IHttpError {
+    if (isHttpError(error)) {
+      return error
+    }
+
+    // This could happen if the request was made but there was no response,
+    // or due to any not-API related error
+    throw error
+  }
+}

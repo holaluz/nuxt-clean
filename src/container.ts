@@ -1,12 +1,14 @@
 // This is where we "inject" dependencies (notice the quotes)
 
-import * as apiService from '@infrastructure/ApiService'
-import { articleRepository as makeArticleRepository } from '@infrastructure/Article/articleRepository'
+import { ApiService } from '@@/src/infrastructure/ApiService'
+import { ArticleService as makeArticleService } from '@infrastructure/Article/ArticleService'
 
 import { createArticle as makeCreateArticle } from '@application/Article/createArticle'
+import { getRecentArticles as makeGetRecentArticles } from '@application/Article/getRecentArticles'
 
 // Infra repositories
-const articleRepository = makeArticleRepository({ apiService })
+const articleService = makeArticleService({ apiService: new ApiService() })
 
 // Application
-export const createArticle = makeCreateArticle({ articleRepository })
+export const createArticle = makeCreateArticle({ articleService })
+export const getRecentArticles = makeGetRecentArticles({ articleService })

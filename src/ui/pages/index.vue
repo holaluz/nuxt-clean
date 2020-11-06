@@ -1,55 +1,42 @@
 <template>
   <div class="container">
-    <div>
-      <h1 class="title">nuxt-clean</h1>
-      <p v-if="error">{{ error }}</p>
-      <p v-else-if="loading">{{ loading }}</p>
-      <add-article-form v-else @submit="handleSubmit" />
-    </div>
+    <h3 style="margin: 3rem 0 1rem">Demo for createArticle</h3>
+    <add-article-form />
+
+    <h3 style="margin: 4rem 0 1rem">Demo for getRecentArticles</h3>
+    <p v-if="error">Error: {{ error }}</p>
+    <p v-else-if="loading">Loading…</p>
+    <article-list v-else :articles="articles" />
   </div>
 </template>
 
 <script lang="ts">
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import Vue from 'vue'
 import AddArticleForm from '../components/AddArticleForm.vue'
+import ArticleList from '../components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
     AddArticleForm,
+    ArticleList,
   },
 
-  computed: {
-    ...mapState('article', ['loading', 'error']),
-  },
+  computed: mapState('article', ['loading', 'error', 'articles']),
 
-  methods: {
-    ...mapActions('article', ['createArticle']),
-
-    handleSubmit(formValues: unknown) {
-      this.createArticle(formValues)
-    },
+  async mounted() {
+    // await this.$store.dispatch('article/getRecentArticles')
   },
 })
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+html {
+  overflow-y: scroll;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.container {
+  margin: 0 auto;
+  max-width: 60ch;
 }
 </style>
