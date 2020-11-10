@@ -31,7 +31,7 @@ export interface IApiService {
 export class ApiService extends HttpClient implements IApiService {
   public constructor() {
     // This should come from a dotenv
-    super('https://httpstat.us')
+    super('https://jsonplaceholder.typicode.com')
   }
 
   public async get<T>(request: IRequestWithoutData): Promise<ApiResult<T>> {

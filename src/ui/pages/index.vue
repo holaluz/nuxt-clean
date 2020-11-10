@@ -25,7 +25,7 @@ export default Vue.extend({
   computed: mapState('article', ['loading', 'error', 'articles']),
 
   async mounted() {
-    // await this.$store.dispatch('article/getRecentArticles')
+    await this.$store.dispatch('article/getRecentArticles')
   },
 })
 </script>

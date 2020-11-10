@@ -29,7 +29,7 @@ export function ArticleService({ apiService }: ApiService): IArticleRepository {
     article: EditingArticle
   ): Promise<ApiResult<Article>> {
     const result = await apiService.post<ArticleDTO>({
-      url: '/401/cors',
+      url: '/posts',
       data: article,
     })
 

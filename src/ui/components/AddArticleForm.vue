@@ -1,5 +1,5 @@
 <template>
-  <form v-if="!error" class="form" @submit.prevent="handleSubmit">
+  <form v-if="!message" class="form" @submit.prevent="handleSubmit">
     <label>
       Title
       <input v-model="form.title" type="text" />
@@ -11,7 +11,7 @@
     <textarea v-model="form.body" rows="10"></textarea>
     <input type="submit" class="submit" value="Submit new post" />
   </form>
-  <p v-else>{{ error }}</p>
+  <p v-else>{{ message }}</p>
 </template>
 
 <script lang="ts">
@@ -24,7 +24,7 @@ export default Vue.extend({
 
   data() {
     return {
-      error: '',
+      message: '',
       form: {
         title: '',
         slug: '',
@@ -41,15 +41,17 @@ export default Vue.extend({
         },
         {
           // eslint-disable-next-line no-console
-          respondWithSuccess: () => console.log('article created!!'),
+          respondWithSuccess: () => {
+            this.message = `Everything went better than expected`
+          },
           respondWithClientError: (e) => {
-            this.error = `I fucked it up: ${e.message}`
+            this.message = `I fucked it up: ${e.message}`
           },
           respondWithServerError: (e) => {
-            this.error = `They fucked it up: ${e.message}`
+            this.message = `They fucked it up: ${e.message}`
           },
           respondWithGenericError: (e) => {
-            this.error = `This is fucked up: ${e.message}`
+            this.message = `This is fucked up: ${e.message}`
           },
         }
       )
