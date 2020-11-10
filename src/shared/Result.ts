@@ -29,6 +29,16 @@ export class Ok<T, E> {
     return ok(this.value)
   }
 
+  /**
+   * Given 2 functions (one for the Ok variant and one for the Err variant)
+   * execute the function that matches the Result variant.
+   * Match is like chaining map and mapErr, with the distinction that with match
+   * both functions must have the same return type.
+   */
+  match = <A>(ok: (t: T) => A, _err: (e: E) => A): A => {
+    return ok(this.value)
+  }
+
   // What additional helpers can we add here?
 }
 
@@ -49,5 +59,15 @@ export class Err<T, E> {
 
   mapErr<U>(f: (e: E) => U): Result<T, U> {
     return err(f(this.error))
+  }
+
+  /**
+   * Given 2 functions (one for the Ok variant and one for the Err variant)
+   * execute the function that matches the Result variant.
+   * Match is like chaining map and mapErr, with the distinction that with match
+   * both functions must have the same return type.
+   */
+  match = <A>(_ok: (t: T) => A, err: (e: E) => A): A => {
+    return err(this.error)
   }
 }

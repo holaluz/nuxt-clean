@@ -42,7 +42,7 @@ export function getRecentArticles({
     // Example 2 - Declarative version
     result
       .map((articleList) => {
-        const articles: Article[] = articleList // the typing is unneeded but I wanted to show off
+        const articles: Article[] = articleList // the typing is not needed but I wanted to show off
         respondWithSuccess(articles)
       })
       .mapErr((error) => {
@@ -50,9 +50,10 @@ export function getRecentArticles({
         if (isHttpError(error)) {
           if (error.isClientError()) {
             respondWithClientError(error)
-          } else {
-            respondWithServerError(error)
+            return
           }
+
+          respondWithServerError(error)
         }
 
         // Example 2.2 - We can also iterate on error constructor
@@ -75,5 +76,12 @@ export function getRecentArticles({
           }
         }
       })
+
+    // Example 3 - Declarative version with Result.match()
+    // Notice that this version FORCES you to handle the error callback
+    result.match(
+      (articleList) => console.log(articleList),
+      (error) => console.warn(error)
+    )
   }
 }
