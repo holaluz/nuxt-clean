@@ -1,4 +1,4 @@
-import { IHttpError } from './HttpErrors'
+import { HttpError } from './HttpErrors'
 import { Result } from './Result'
 
-export type ApiResult<T> = Result<T, IHttpError | Error>
+export type ApiResult<T> = Result<T, HttpError>

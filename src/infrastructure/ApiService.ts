@@ -1,5 +1,5 @@
 import { HttpClient } from '../shared/HttpClient'
-import { IHttpError, HttpError, isHttpError } from '../shared/HttpErrors'
+import { HttpError, isHttpError } from '../shared/HttpErrors'
 import { ApiResult } from '../shared/ApiResponse'
 import { err, ok } from '../shared/Result'
 
@@ -60,7 +60,7 @@ export class ApiService extends HttpClient implements IApiService {
     }
   }
 
-  private handleError(error: HttpError | Error): IHttpError {
+  private handleError(error: HttpError | Error) {
     if (isHttpError(error)) {
       return error
     }

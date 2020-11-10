@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { EditingArticle, IArticleRepository } from '@domain/Article'
-import * as HttpErrors from '@@/src/shared/HttpErrors'
-import { IHttpError } from '@@/src/shared/HttpErrors'
+import { HttpError, isHttpError } from '@@/src/shared/HttpErrors'
 
 type Parameters = {
   editingArticle: EditingArticle
@@ -13,8 +12,8 @@ type Services = {
 
 type Callbacks = {
   respondWithSuccess: () => void
-  respondWithClientError: (e: IHttpError) => void
-  respondWithServerError: (e: IHttpError) => void
+  respondWithClientError: (e: HttpError) => void
+  respondWithServerError: (e: HttpError) => void
   respondWithGenericError: (e: Error) => void
 }
 
@@ -40,7 +39,7 @@ export function createArticle({
     if (result.isErr()) {
       const error = result.error
 
-      if (!HttpErrors.isHttpError(error)) {
+      if (!isHttpError(error)) {
         respondWithGenericError(error)
         return
       }

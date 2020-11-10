@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Article, IArticleRepository } from '@domain/Article'
-import { IHttpError, isHttpError } from '@@/src/shared/HttpErrors'
+import { HttpError, isHttpError } from '@@/src/shared/HttpErrors'
 import { HttpStatusCode } from '@@/src/shared/HttpStatusCode'
 
 type Services = {
@@ -10,8 +10,8 @@ type Services = {
 type Parameters = null
 type Callbacks = {
   respondWithSuccess: (articles: Article[]) => void
-  respondWithClientError: (e: IHttpError) => void
-  respondWithServerError: (e: IHttpError) => void
+  respondWithClientError: (e: HttpError) => void
+  respondWithServerError: (e: HttpError) => void
 }
 
 export function getRecentArticles({
