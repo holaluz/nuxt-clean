@@ -40,7 +40,6 @@ export default Vue.extend({
           editingArticle: this.form,
         },
         {
-          // eslint-disable-next-line no-console
           respondWithSuccess: () => {
             this.message = `Everything went better than expected`
           },
