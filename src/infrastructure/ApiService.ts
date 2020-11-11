@@ -56,7 +56,6 @@ export class ApiService implements IApiService {
   }: IRequestWithData): Promise<ApiResult<T>> {
     try {
       const response = await this.axiosService.post(url, data, config)
-      throw new Error('whatsaaaaaaaaaa')
       return ok(response.data)
     } catch (error) {
       return err(error)
