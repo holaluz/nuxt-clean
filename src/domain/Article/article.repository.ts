@@ -1,7 +1,7 @@
-import { ApiResult } from '@@/src/shared/ApiResponse'
+import { HttpResult } from '@@/src/shared/HttpResult'
 import { Article, EditingArticle } from './article.types'
 
 export interface IArticleRepository {
-  getRecentArticles(): Promise<ApiResult<Article[]>>
-  createArticle(article: EditingArticle): Promise<ApiResult<Article>>
+  getRecentArticles(): Promise<HttpResult<Article[]>>
+  createArticle(article: EditingArticle): Promise<HttpResult<Article>>
 }

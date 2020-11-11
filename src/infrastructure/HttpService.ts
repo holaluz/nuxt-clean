@@ -4,28 +4,27 @@ import axios, {
   AxiosRequestConfig,
   AxiosError,
 } from 'axios'
-import { ApiResult } from '../shared/ApiResponse'
-import { HttpError } from '../shared/HttpError'
-import { err, ok } from '../shared/Result'
+import { err, ok } from '@@/src/shared/Result'
+import { HttpError } from '@@/src/shared/HttpError'
+import { HttpResult } from '@@/src/shared/HttpResult'
 
-export interface Data {
+type Data = {
   [key: string]: unknown
 }
 
-type IRequestWithoutData = {
+type IHttpRequest = {
   url: string
-  config?: AxiosRequestConfig
+  config?: Data
+  data?: Data
 }
 
-type IRequestWithData = IRequestWithoutData & { data?: Data }
-
-export interface IApiService {
-  get<T>(request: IRequestWithoutData): Promise<ApiResult<T>>
-  post<T>(request: IRequestWithData): Promise<ApiResult<T>>
+export interface IHttpService {
+  get<T>(request: IHttpRequest): Promise<HttpResult<T>>
+  post<T>(request: IHttpRequest): Promise<HttpResult<T>>
 }
 
-export class ApiService implements IApiService {
-  protected readonly axiosService: AxiosInstance
+export class HttpService implements IHttpService {
+  private readonly axiosService: AxiosInstance
 
   constructor(baseUrl: string) {
     this.axiosService = axios.create({
@@ -37,10 +36,7 @@ export class ApiService implements IApiService {
     this._initializeResponseInterceptor()
   }
 
-  public async get<T>({
-    url,
-    config,
-  }: IRequestWithoutData): Promise<ApiResult<T>> {
+  public async get<T>({ url, config }: IHttpRequest): Promise<HttpResult<T>> {
     try {
       const response = await this.axiosService.get<T>(url, config)
       return ok(response.data)
@@ -53,7 +49,7 @@ export class ApiService implements IApiService {
     url,
     data,
     config,
-  }: IRequestWithData): Promise<ApiResult<T>> {
+  }: IHttpRequest): Promise<HttpResult<T>> {
     try {
       const response = await this.axiosService.post(url, data, config)
       return ok(response.data)

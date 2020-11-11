@@ -1,7 +1,6 @@
-import { ApiResult } from '@@/src/shared/ApiResponse'
 import { Article, EditingArticle, IArticleRepository } from '@domain/Article'
-
-import { IApiService } from '../ApiService'
+import { HttpResult } from '@@/src/shared/HttpResult'
+import { IHttpService } from '../HttpService'
 import { fromDTOtoViewModel } from './ArticleMapper'
 import { ArticleDTO } from './ArticleDTO'
 
@@ -9,14 +8,14 @@ import { ArticleDTO } from './ArticleDTO'
  * The goal of this layer is to perform a request and transform the data
  * returned by the server to a domain model defined in our application.
  */
-export function ArticleService(apiService: IApiService): IArticleRepository {
+export function ArticleService(httpService: IHttpService): IArticleRepository {
   return {
     getRecentArticles,
     createArticle,
   }
 
-  async function getRecentArticles(): Promise<ApiResult<Article[]>> {
-    const result = await apiService.get<ArticleDTO[]>({
+  async function getRecentArticles(): Promise<HttpResult<Article[]>> {
+    const result = await httpService.get<ArticleDTO[]>({
       url: '/posts',
     })
 
@@ -25,8 +24,8 @@ export function ArticleService(apiService: IApiService): IArticleRepository {
 
   async function createArticle(
     article: EditingArticle
-  ): Promise<ApiResult<Article>> {
-    const result = await apiService.post<ArticleDTO>({
+  ): Promise<HttpResult<Article>> {
+    const result = await httpService.post<ArticleDTO>({
       url: '/posts',
       data: article,
     })
