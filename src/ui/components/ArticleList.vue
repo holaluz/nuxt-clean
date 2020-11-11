@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-import { Article } from '@@/src/domain/Article'
 import Vue, { PropOptions } from 'vue'
+import { Article } from '@domain/Article'
 
 export default Vue.extend({
   name: 'ArticleList',

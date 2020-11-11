@@ -1,6 +1,6 @@
 // This is where we "inject" dependencies (notice the quotes)
 
-import { ApiService } from '@@/src/infrastructure/ApiService'
+import { ApiService } from '@infrastructure/ApiService'
 import { ArticleService as makeArticleService } from '@infrastructure/Article/ArticleService'
 
 import { createArticle as makeCreateArticle } from '@application/Article/createArticle'

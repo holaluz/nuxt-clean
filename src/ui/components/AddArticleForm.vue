@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
-import { createArticle } from '@@/src/container'
-import { EditingArticle } from '@@/src/domain/Article'
 import Vue from 'vue'
+import { createArticle } from '@@/src/container'
+import { EditingArticle } from '@domain/Article'
 
 export default Vue.extend({
   name: 'AddArticleForm',
