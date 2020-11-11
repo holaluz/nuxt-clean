@@ -2,7 +2,7 @@ import { ApiResult } from '@@/src/shared/ApiResponse'
 import { Article, EditingArticle, IArticleRepository } from '@domain/Article'
 
 import { IApiService } from '../ApiService'
-import { ArticleMapper } from './ArticleMapper'
+import { fromDTOtoViewModel } from './ArticleMapper'
 import { ArticleDTO } from './ArticleDTO'
 
 type ApiService = {
@@ -20,9 +20,7 @@ export function ArticleService({ apiService }: ApiService): IArticleRepository {
       url: '/posts',
     })
 
-    return result.map((articlesDTO) =>
-      articlesDTO.map((p: ArticleDTO) => ArticleMapper.fromDTOtoViewModel(p))
-    )
+    return result.map((articlesDTO) => articlesDTO.map(fromDTOtoViewModel))
   }
 
   async function createArticle(
@@ -33,8 +31,6 @@ export function ArticleService({ apiService }: ApiService): IArticleRepository {
       data: article,
     })
 
-    return result.map((articleDTO) =>
-      ArticleMapper.fromDTOtoViewModel(articleDTO)
-    )
+    return result.map(fromDTOtoViewModel)
   }
 }
