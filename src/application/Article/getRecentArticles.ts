@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Article, IArticleRepository } from '@domain/Article'
-import { HttpError, isHttpError } from '@@/src/shared/HttpErrors'
+import { HttpError, isHttpError } from '@@/src/shared/HttpError'
 import { HttpStatusCode } from '@@/src/shared/HttpStatusCode'
 
 type Services = {
