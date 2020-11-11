@@ -14,7 +14,7 @@ enum ENDPOINTS {
 const coreApiService = new ApiService(ENDPOINTS.CORE)
 
 // Infra repositories
-const articleService = makeArticleService({ apiService: coreApiService })
+const articleService = makeArticleService(coreApiService)
 
 // Application
 export const createArticle = makeCreateArticle({ articleService })
