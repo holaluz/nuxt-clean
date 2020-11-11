@@ -9,6 +9,10 @@ type ApiService = {
   apiService: IApiService
 }
 
+/**
+ * The goal of this layer is to perform a request and transform the data
+ * returned by the server to a domain model defined in our application.
+ */
 export function ArticleService({ apiService }: ApiService): IArticleRepository {
   return {
     getRecentArticles,
