@@ -42,7 +42,9 @@ export function getRecentArticles({
     // Example 2 - Declarative version
     result
       .map((articleList) => {
-        const articles: Article[] = articleList // the typing is not needed but I wanted to show off
+        // The type annotation (Article[]) is unnecessary here but I've
+        // included it for clarity.
+        const articles: Article[] = articleList
         respondWithSuccess(articles)
       })
       .mapErr((error) => {
