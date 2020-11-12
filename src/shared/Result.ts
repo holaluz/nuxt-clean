@@ -30,11 +30,11 @@ export class Ok<T, E> {
   }
 
   /**
-   * Match is like chaining map and mapErr, with the distinction that with
-   * match both functions must have the same return type, and that it forces
+   * fold() is like chaining map and mapErr, with the distinction that with
+   * fold() both functions must have the same return type, and that it forces
    * handling of error.
    */
-  match<A>(ok: (t: T) => A, _err: (e: E) => A): A {
+  fold<A>(ok: (t: T) => A, _err: (e: E) => A): A {
     return ok(this.value)
   }
 
@@ -61,11 +61,11 @@ export class Err<T, E> {
   }
 
   /**
-   * Match is like chaining map and mapErr, with the distinction that with
-   * match both functions must have the same return type, and that it forces
+   * fold() is like chaining map and mapErr, with the distinction that with
+   * fold() both functions must have the same return type, and that it forces
    * handling of error.
    */
-  match<A>(_ok: (t: T) => A, err: (e: E) => A): A {
+  fold<A>(_ok: (t: T) => A, err: (e: E) => A): A {
     return err(this.error)
   }
 }

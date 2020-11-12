@@ -47,7 +47,7 @@ describe('Result.Ok', () => {
     const okMapper = jest.fn((_val) => 'weeeeee')
     const errMapper = jest.fn((_val) => 'wooooo')
 
-    const matched = ok(12).match(okMapper, errMapper)
+    const matched = ok(12).fold(okMapper, errMapper)
 
     expect(matched).toBe('weeeeee')
     expect(okMapper).toHaveBeenCalledTimes(1)
@@ -103,7 +103,7 @@ describe('Result.Err', () => {
     const okMapper = jest.fn((_val) => 'weeeeee')
     const errMapper = jest.fn((_val) => 'wooooo')
 
-    const matched = err(12).match(okMapper, errMapper)
+    const matched = err(12).fold(okMapper, errMapper)
 
     expect(matched).toBe('wooooo')
     expect(okMapper).not.toHaveBeenCalled()
