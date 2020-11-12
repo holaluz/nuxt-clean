@@ -1,4 +1,4 @@
-import { ok, err, Ok, Err, Result } from './Result'
+import { ok, err, Result } from './Result'
 
 describe('Result.Ok', () => {
   test('creates an Ok value', () => {
@@ -6,7 +6,6 @@ describe('Result.Ok', () => {
 
     expect(okVal.isOk()).toBe(true)
     expect(okVal.isErr()).toBe(false)
-    expect(okVal).toBeInstanceOf(Ok)
   })
 
   test('creates an Ok value with null', () => {
@@ -43,16 +42,16 @@ describe('Result.Ok', () => {
     expect(mapErrorFunc).not.toHaveBeenCalled()
   })
 
-  test('matches on an Ok', () => {
-    const okMapper = jest.fn((_val) => 'weeeeee')
-    const errMapper = jest.fn((_val) => 'wooooo')
+  test('folds on an Ok', () => {
+    const okFolder = jest.fn((_val) => 'weeeeee')
+    const errFolder = jest.fn((_val) => 'wooooo')
 
-    const matched = ok(12).fold(okMapper, errMapper)
+    const folded = ok(12).fold(okFolder, errFolder)
 
-    expect(matched).toBe('weeeeee')
-    expect(okMapper).toHaveBeenCalledTimes(1)
-    expect(okMapper).toHaveBeenCalledWith(12)
-    expect(errMapper).not.toHaveBeenCalled()
+    expect(folded).toBe('weeeeee')
+    expect(okFolder).toHaveBeenCalledTimes(1)
+    expect(okFolder).toHaveBeenCalledWith(12)
+    expect(errFolder).not.toHaveBeenCalled()
   })
 
   test('can read the value after narrowing', () => {
@@ -73,7 +72,6 @@ describe('Result.Err', () => {
 
     expect(errVal.isOk()).toBe(false)
     expect(errVal.isErr()).toBe(true)
-    expect(errVal).toBeInstanceOf(Err)
   })
 
   test('skips `map`', () => {
@@ -99,15 +97,15 @@ describe('Result.Err', () => {
     expect(mapper).toHaveBeenCalledWith('errored value')
   })
 
-  test('matches on an Err', () => {
-    const okMapper = jest.fn((_val) => 'weeeeee')
-    const errMapper = jest.fn((_val) => 'wooooo')
+  test('folds on an Err', () => {
+    const okFolder = jest.fn((_val) => 'weeeeee')
+    const errFolder = jest.fn((_val) => 'wooooo')
 
-    const matched = err(12).fold(okMapper, errMapper)
+    const folded = err(12).fold(okFolder, errFolder)
 
-    expect(matched).toBe('wooooo')
-    expect(okMapper).not.toHaveBeenCalled()
-    expect(errMapper).toHaveBeenCalledTimes(1)
-    expect(errMapper).toHaveBeenCalledWith(12)
+    expect(folded).toBe('wooooo')
+    expect(okFolder).not.toHaveBeenCalled()
+    expect(errFolder).toHaveBeenCalledTimes(1)
+    expect(errFolder).toHaveBeenCalledWith(12)
   })
 })
