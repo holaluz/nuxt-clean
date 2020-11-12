@@ -38,6 +38,8 @@ class Ok<T, E> {
   }
 
   /**
+   * Maps a Result<T, E> to Result<T, E> (same types) by applying a function
+   * to a contained Ok value and another function to a contained Err value.
    * fold() is like chaining map and mapErr, with the distinction that both
    * functions must have the same return type, and that it forces error handling.
    */
@@ -76,6 +78,8 @@ class Err<T, E> {
   }
 
   /**
+   * Maps a Result<T, E> to Result<T, E> (same types) by applying a function
+   * to a contained Ok value and another function to a contained Err value.
    * fold() is like chaining map and mapErr, with the distinction that both
    * functions must have the same return type, and that it forces error handling.
    */
