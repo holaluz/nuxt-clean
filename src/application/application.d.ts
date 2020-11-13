@@ -1,3 +1,3 @@
 type UseCase<P, C> = {
-  execute: (parameters: P, callbacks: C) => void
+  execute: (parameters: P, callbacks: C) => Promise<void> | void
 }

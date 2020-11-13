@@ -1,10 +1,7 @@
-import { User } from '@domain/User'
+import { HttpResult } from '@@/src/shared/HttpResult'
 import { Article, EditingArticle } from './article.types'
 
-export type ArticleRepository = {
-  get: (id: string, user: User) => Promise<Article>
-  add: (editingArticle: EditingArticle, user: User) => Promise<Article>
-  // update
-  // remove
-  // ...
+export interface IArticleRepository {
+  getRecentArticles(): Promise<HttpResult<Article[]>>
+  createArticle(article: EditingArticle): Promise<HttpResult<Article>>
 }

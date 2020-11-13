@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import path from 'path'
 import { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {
-  mode: 'spa',
+  ssr: false,
 
   rootDir: '.',
 
@@ -43,18 +42,20 @@ const config: NuxtConfig = {
   axios: {},
 
   build: {
-    extend(config: any) {
-      // @ts-ignore
+    extend(config) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore "Property 'buildContext' does not exist on type 'NuxtOptionsBuild'"
       const rootDir = this.buildContext.options.rootDir
-      const join = (p: string) => path.join(rootDir, 'src', p)
-      // @ts-ignore
-      config.resolve.alias['@domain'] = join('domain')
-      // @ts-ignore
-      config.resolve.alias['@application'] = join('application')
-      // @ts-ignore
-      config.resolve.alias['@infrastructure'] = join('infrastructure')
-      // @ts-ignore
-      config.resolve.alias['@ui'] = join('ui')
+      const joinSrc = (p: string) => path.join(rootDir, 'src', p)
+
+      if (!config?.resolve?.alias) {
+        throw new Error('webpack config aliases not found!')
+      }
+
+      config.resolve.alias['@domain'] = joinSrc('domain')
+      config.resolve.alias['@application'] = joinSrc('application')
+      config.resolve.alias['@infrastructure'] = joinSrc('infrastructure')
+      config.resolve.alias['@ui'] = joinSrc('ui')
     },
   },
 }
