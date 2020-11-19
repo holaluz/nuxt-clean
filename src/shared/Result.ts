@@ -4,6 +4,8 @@
 // eslint-disable-next-line no-use-before-define
 export type Result<T, E> = Ok<T, E> | Err<T, E>
 
+export type AsyncResult<T, E> = Promise<Result<T, E>>
+
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
 export const ok = <T, E>(value: T): Ok<T, E> => new Ok(value)
 

@@ -19,8 +19,8 @@ type IHttpRequest = {
 }
 
 export interface IHttpService {
-  get<T>(request: IHttpRequest): Promise<HttpResult<T>>
-  post<T>(request: IHttpRequest): Promise<HttpResult<T>>
+  get<T>(request: IHttpRequest): HttpResult<T>
+  post<T>(request: IHttpRequest): HttpResult<T>
 }
 
 export class HttpService implements IHttpService {
@@ -36,7 +36,7 @@ export class HttpService implements IHttpService {
     this._initializeResponseInterceptor()
   }
 
-  public async get<T>({ url, config }: IHttpRequest): Promise<HttpResult<T>> {
+  public async get<T>({ url, config }: IHttpRequest): HttpResult<T> {
     try {
       const response = await this.axiosService.get<T>(url, config)
       return ok(response.data)
@@ -45,11 +45,7 @@ export class HttpService implements IHttpService {
     }
   }
 
-  public async post<T>({
-    url,
-    data,
-    config,
-  }: IHttpRequest): Promise<HttpResult<T>> {
+  public async post<T>({ url, data, config }: IHttpRequest): HttpResult<T> {
     try {
       const response = await this.axiosService.post(url, data, config)
       return ok(response.data)
