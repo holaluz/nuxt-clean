@@ -14,7 +14,7 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
     createArticle,
   }
 
-  async function getRecentArticles(): Promise<HttpResult<Article[]>> {
+  async function getRecentArticles(): HttpResult<Article[]> {
     const result = await httpService.get<ArticleDTO[]>({
       url: '/posts',
     })
@@ -22,9 +22,7 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
     return result.map((articlesDTO) => articlesDTO.map(fromDTOtoViewModel))
   }
 
-  async function createArticle(
-    article: EditingArticle
-  ): Promise<HttpResult<Article>> {
+  async function createArticle(article: EditingArticle): HttpResult<Article> {
     const result = await httpService.post<ArticleDTO>({
       url: '/posts',
       data: article,
