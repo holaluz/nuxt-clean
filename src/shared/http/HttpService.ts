@@ -5,8 +5,8 @@ import axios, {
   AxiosError,
 } from 'axios'
 import { err, ok } from '@@/src/shared/Result'
-import { HttpError } from '@@/src/shared/HttpError'
-import { HttpResult } from '@@/src/shared/HttpResult'
+import { HttpError } from '@@/src/shared/http/HttpError'
+import { HttpResult } from '@@/src/shared/http/HttpResult'
 
 type Data = {
   [key: string]: unknown

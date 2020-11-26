@@ -1,7 +1,11 @@
-import { Article, EditingArticle, IArticleRepository } from '@domain/Article'
-import { HttpResult } from '@@/src/shared/HttpResult'
-import { IHttpService } from '../HttpService'
-import { fromDTOtoViewModel } from './ArticleMapper'
+import {
+  Article,
+  EditingArticle,
+  IArticleRepository,
+} from '@@/src/modules/article/domain'
+import { HttpResult } from '@@/src/shared/http/HttpResult'
+import { IHttpService } from '@@/src/shared/http/HttpService'
+import { ArticleParser } from './ArticleParser'
 import { ArticleDTO } from './ArticleDTO'
 
 /**
@@ -15,11 +19,9 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
   }
 
   async function getRecentArticles(): HttpResult<Article[]> {
-    const result = await httpService.get<ArticleDTO[]>({
-      url: '/posts',
-    })
+    const result = await httpService.get<ArticleDTO[]>({ url: '/posts' })
 
-    return result.map((articlesDTO) => articlesDTO.map(fromDTOtoViewModel))
+    return result.map((articlesDTO) => articlesDTO.map(ArticleParser))
   }
 
   async function createArticle(article: EditingArticle): HttpResult<Article> {
@@ -28,6 +30,6 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
       data: article,
     })
 
-    return result.map(fromDTOtoViewModel)
+    return result.map(ArticleParser)
   }
 }

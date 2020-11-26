@@ -1,7 +1,7 @@
 export type ArticleDTO = {
   slug: string
   title: string
-  createdAt: string | Date
+  createdAt: string
   body: string
   excerpt: string
   isFavorited: boolean

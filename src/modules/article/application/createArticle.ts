@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
-import { EditingArticle, IArticleRepository } from '@domain/Article'
-import { HttpError, isHttpError } from '@@/src/shared/HttpError'
+import {
+  EditingArticle,
+  IArticleRepository,
+} from '@@/src/modules/article/domain'
+import { HttpError, isHttpError } from '@@/src/shared/http/HttpError'
 
 type Parameters = {
   editingArticle: EditingArticle
