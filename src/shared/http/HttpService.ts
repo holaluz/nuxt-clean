@@ -16,8 +16,10 @@ type IHttpRequest = {
   data?: any
 }
 
-type FailableParser<T, M> = (_: T) => Result<M, ParseError>
 type Parser<T, M> = (_: T) => M
+
+// A FailableParser is just a Parser wrapped in a Result
+type FailableParser<T, M> = (_: T) => Result<M, ParseError>
 
 type GetParser<T, M> = {
   parseTo: FailableParser<T, M>
