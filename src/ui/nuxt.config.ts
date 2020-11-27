@@ -1,4 +1,3 @@
-import path from 'path'
 import { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {
@@ -28,36 +27,6 @@ const config: NuxtConfig = {
    ** Nuxt.js dev-modules
    */
   buildModules: ['@nuxt/typescript-build'],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-  ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
-
-  build: {
-    extend(config) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore "Property 'buildContext' does not exist on type 'NuxtOptionsBuild'"
-      const rootDir = this.buildContext.options.rootDir
-      const joinSrc = (p: string) => path.join(rootDir, 'src', p)
-
-      if (!config?.resolve?.alias) {
-        throw new Error('webpack config aliases not found!')
-      }
-
-      config.resolve.alias['@domain'] = joinSrc('domain')
-      config.resolve.alias['@application'] = joinSrc('application')
-      config.resolve.alias['@infrastructure'] = joinSrc('infrastructure')
-      config.resolve.alias['@ui'] = joinSrc('ui')
-    },
-  },
 }
 
 export default config

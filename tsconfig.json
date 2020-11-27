@@ -23,10 +23,6 @@
       "@/*": [ "./src/ui/*" ],
       "@@/*": [ "./*" ],
       "~~/*": [ "./*" ],
-      "@domain/*": [ "./src/domain/*" ],
-      "@application/*": [ "./src/application/*" ],
-      "@infrastructure/*": [ "./src/infrastructure/*" ],
-      "@ui/*": [ "./src/ui/*" ]
     },
     "types": [
       "jest",
