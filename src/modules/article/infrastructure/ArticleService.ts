@@ -3,10 +3,11 @@ import {
   EditingArticle,
   IArticleRepository,
 } from '@@/src/modules/article/domain'
+import { combine } from '@@/src/shared/Result'
 import { HttpResult } from '@@/src/shared/http/HttpResult'
 import { IHttpService } from '@@/src/shared/http/HttpService'
-import { ArticleParser } from './ArticleParser'
-import { ArticleDTO } from './ArticleDTO'
+import { IArticleDTO } from './ArticleParser'
+import * as ArticleDTO from './ArticleParser'
 
 /**
  * The goal of this layer is to perform a request and transform the data
@@ -19,17 +20,34 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
   }
 
   async function getRecentArticles(): HttpResult<Article[]> {
-    const result = await httpService.get<ArticleDTO[]>({ url: '/posts' })
+    function parseTo(articlesDTO: IArticleDTO[]) {
+      const listOfArticleResults = articlesDTO.map(ArticleDTO.toDomain)
+      return combine(listOfArticleResults)
+    }
 
-    return result.map((articlesDTO) => articlesDTO.map(ArticleParser))
+    const result = await httpService.get<IArticleDTO[], Article[]>(
+      { url: '/posts' },
+      { parseTo }
+    )
+
+    return result
   }
 
   async function createArticle(article: EditingArticle): HttpResult<Article> {
-    const result = await httpService.post<ArticleDTO>({
-      url: '/posts',
-      data: article,
-    })
+    const result = await httpService.post<IArticleDTO, Article>(
+      {
+        url: '/posts',
+        data: article,
+      },
+      {
+        parseTo: (articleDTO: IArticleDTO) => ArticleDTO.toDomain(articleDTO),
 
-    return result.map(ArticleParser)
+        // not 100% sure about this
+        parseFrom: (editingArticle: Article) =>
+          ArticleDTO.fromDomain(editingArticle),
+      }
+    )
+
+    return result
   }
 }

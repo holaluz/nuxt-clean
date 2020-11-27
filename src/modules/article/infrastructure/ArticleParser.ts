@@ -1,14 +1,47 @@
 import { Article } from '@@/src/modules/article/domain'
-import { ArticleDTO } from './ArticleDTO'
+import { ParseError } from '@@/src/shared/http/ParseError'
+import { err, ok, combine, Result } from '@@/src/shared/Result'
+import { createArticleTitle } from '../domain'
 
-// Imagine the API does not map our Entity 1-to-1. This mapper helps
-// us with the translation.
-export function ArticleParser(dto: ArticleDTO) {
-  return {
+export type IArticleDTO = {
+  slug: string
+  title: string
+  createdAt: string
+  body: string
+  isFavorited: boolean
+}
+
+export function toDomain(dto: IArticleDTO): Result<Article, ParseError> {
+  const articleTitle = createArticleTitle(dto.title)
+
+  // imagine we had several Results
+  const severalResults = [articleTitle]
+  const combinedResults = combine(severalResults)
+
+  // oops! something went wrong when creating domain objects from DTO
+  if (combinedResults.isErr()) {
+    const error = new Error(combinedResults.error)
+    return err(ParseError.fromError(error))
+  }
+
+  // everything is ok! Now we can get the valid results back
+  const [title] = combinedResults.value
+
+  return ok({
+    title,
     slug: dto.slug,
-    title: dto.title,
     createdAt: new Date(dto.createdAt),
     body: dto.body,
     favorited: dto.isFavorited,
-  } as Article
+  })
+}
+
+export function fromDomain(dto: Article): IArticleDTO {
+  return {
+    slug: dto.slug,
+    title: dto.title,
+    createdAt: dto.createdAt.toISOString(),
+    body: dto.body,
+    isFavorited: dto.favorited,
+  } as IArticleDTO
 }
