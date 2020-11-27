@@ -51,32 +51,34 @@ export class HttpService implements IHttpService {
     }
   }
 
-  private _initializeRequestInterceptor = () => {
+
+  private _initializeRequestInterceptor() {
     this.axiosService.interceptors.request.use(
       this._handleRequest,
       this._handleError
     )
   }
 
-  private _initializeResponseInterceptor = () => {
+  private _initializeResponseInterceptor() {
     this.axiosService.interceptors.response.use(
       (response: AxiosResponse) => response,
       this._handleError
     )
   }
 
-  private _handleRequest = (config: AxiosRequestConfig) => {
+  private _handleRequest(config: AxiosRequestConfig) {
     // get this from a cookie, or whatever
     config.headers.Authorization = 'Bearer ...'
 
     return config
   }
 
-  private _handleError = (error: AxiosError): HttpError => {
+  private _handleError(error: AxiosError): HttpError {
     if (error.response) {
       return HttpError.fromStatus(error.response.status, error.message)
     }
 
+    // Otherwise resume the chain of error throws
     throw error
   }
 }
