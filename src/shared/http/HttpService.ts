@@ -8,14 +8,11 @@ import { err, ok } from '@@/src/shared/Result'
 import { HttpError } from '@@/src/shared/http/HttpError'
 import { HttpResult } from '@@/src/shared/http/HttpResult'
 
-type Data = {
-  [key: string]: unknown
-}
-
 type IHttpRequest = {
   url: string
-  config?: Data
-  data?: Data
+  config?: AxiosRequestConfig
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: any
 }
 
 export interface IHttpService {
