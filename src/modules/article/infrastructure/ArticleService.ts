@@ -2,10 +2,10 @@ import {
   Article,
   EditingArticle,
   IArticleRepository,
-} from '@@/src/modules/article/domain'
-import { combine } from '@@/src/shared/Result'
-import { HttpResult } from '@@/src/shared/http/HttpResult'
-import { IHttpService } from '@@/src/shared/http/HttpService'
+} from '@modules/article/domain'
+import { combine } from '@shared/Result'
+import { HttpResult } from '@shared/http/HttpResult'
+import { IHttpService } from '@shared/http/HttpService'
 import { IArticleDTO } from './ArticleParser'
 import * as ArticleDTO from './ArticleParser'
 

@@ -1,3 +1,4 @@
+import path from 'path'
 import { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {
@@ -27,6 +28,22 @@ const config: NuxtConfig = {
    ** Nuxt.js dev-modules
    */
   buildModules: ['@nuxt/typescript-build'],
+
+  build: {
+    extend(config) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore "Property 'buildContext' does not exist on type 'NuxtOptionsBuild'"
+      const rootDir: string = this.buildContext.options.rootDir
+      const joinSrc = (s: string) => path.join(rootDir, 'src', s)
+
+      if (!config?.resolve?.alias) {
+        throw new Error('webpack config aliases not found!')
+      }
+
+      config.resolve.alias['@modules'] = joinSrc('modules')
+      config.resolve.alias['@shared'] = joinSrc('shared')
+    },
+  },
 }
 
 export default config

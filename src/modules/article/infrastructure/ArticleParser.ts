@@ -1,6 +1,6 @@
-import { Article } from '@@/src/modules/article/domain'
-import { ParseError } from '@@/src/shared/http/ParseError'
-import { err, ok, combine, Result } from '@@/src/shared/Result'
+import { Article } from '@modules/article/domain'
+import { ParseError } from '@shared/http/ParseError'
+import { err, ok, combine, Result } from '@shared/Result'
 import { createArticleTitle } from '../domain'
 
 export type IArticleDTO = {

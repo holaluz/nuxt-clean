@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import { Article, IArticleRepository } from '@@/src/modules/article/domain'
-import { HttpError, isHttpError } from '@@/src/shared/http/HttpError'
-import { HttpStatusCode } from '@@/src/shared/http/HttpStatusCode'
+import { Article, IArticleRepository } from '@modules/article/domain'
+import { HttpError, isHttpError } from '@shared/http/HttpError'
+import { HttpStatusCode } from '@shared/http/HttpStatusCode'
 
 type Services = {
   articleService: IArticleRepository

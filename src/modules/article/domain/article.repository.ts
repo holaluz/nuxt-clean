@@ -1,4 +1,4 @@
-import { HttpResult } from '@@/src/shared/http/HttpResult'
+import { HttpResult } from '@shared/http/HttpResult'
 import { Article, EditingArticle } from './article.types'
 
 export interface IArticleRepository {

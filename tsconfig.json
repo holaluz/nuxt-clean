@@ -19,10 +19,11 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [ "./src/ui/*" ],
-      "@/*": [ "./src/ui/*" ],
       "@@/*": [ "./*" ],
       "~~/*": [ "./*" ],
+      "@modules/*": [ "./src/modules/*" ],
+      "@shared/*": [ "./src/shared/*" ],
+      "@ui/*": [ "./src/ui/*" ]
     },
     "types": [
       "jest",

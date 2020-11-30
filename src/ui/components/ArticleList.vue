@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Article } from '@@/src/modules/article/domain'
+import { Article } from '@modules/article/domain'
 
 export default Vue.extend({
   name: 'ArticleList',

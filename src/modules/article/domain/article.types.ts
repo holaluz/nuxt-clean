@@ -5,7 +5,7 @@ primitive values. With current implementation, for instance, you
 can easily mix title, body and slug, because they share structure.
 */
 
-import { err, ok, Result } from '@@/src/shared/Result'
+import { err, ok, Result } from '@shared/Result'
 
 export type ArticleSlug = string
 export type ArticleTitle = string

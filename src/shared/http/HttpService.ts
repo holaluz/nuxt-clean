@@ -4,10 +4,10 @@ import axios, {
   AxiosRequestConfig,
   AxiosError,
 } from 'axios'
-import { err, Result } from '@@/src/shared/Result'
-import { HttpError } from '@@/src/shared/http/HttpError'
-import { HttpResult } from '@@/src/shared/http/HttpResult'
-import { ParseError } from '@@/src/shared/http/ParseError'
+import { err, Result } from '@shared/Result'
+import { HttpError } from '@shared/http/HttpError'
+import { HttpResult } from '@shared/http/HttpResult'
+import { ParseError } from '@shared/http/ParseError'
 
 type IHttpRequest = {
   url: string

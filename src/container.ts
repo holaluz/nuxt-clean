@@ -1,10 +1,10 @@
 // This is where we "inject" dependencies (notice the quotes)
 
-import { HttpService } from '@@/src/shared/http/HttpService'
-import { ArticleService as makeArticleService } from '@@/src/modules/article/infrastructure/ArticleService'
+import { HttpService } from '@shared/http/HttpService'
+import { ArticleService as makeArticleService } from '@modules/article/infrastructure/ArticleService'
 
-import { createArticle as makeCreateArticle } from '@@/src/modules/article/application/createArticle'
-import { getRecentArticles as makeGetRecentArticles } from '@@/src/modules/article/application/getRecentArticles'
+import { createArticle as makeCreateArticle } from '@modules/article/application/createArticle'
+import { getRecentArticles as makeGetRecentArticles } from '@modules/article/application/getRecentArticles'
 
 // Dotenv or something
 enum ENDPOINTS {

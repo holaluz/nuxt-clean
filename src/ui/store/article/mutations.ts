@@ -1,4 +1,4 @@
-import { Article } from '@@/src/modules/article/domain'
+import { Article } from '@modules/article/domain'
 import { MutationTree } from 'vuex'
 import { RootState } from './state'
 
