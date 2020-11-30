@@ -8,10 +8,12 @@
       Slug
       <input v-model="form.slug" type="text" />
     </label>
-    <textarea v-model="form.body" rows="10"></textarea>
+    <textarea v-model="form.body" rows="10" />
     <input type="submit" class="submit" value="Submit new post" />
   </form>
-  <p v-else>{{ message }}</p>
+  <p v-else>
+    {{ message }}
+  </p>
 </template>
 
 <script lang="ts">

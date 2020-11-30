@@ -70,6 +70,7 @@ class Ok<T, E> {
 }
 
 class Err<T, E> {
+  // eslint-disable-next-line node/handle-callback-err
   constructor(readonly error: E) {}
 
   isOk(): this is Ok<T, E> {

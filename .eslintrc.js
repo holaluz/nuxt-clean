@@ -1,9 +1,10 @@
-module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    node: true,
-  },
+/* eslint-disable @typescript-eslint/no-var-requires */
+const merge = require('lodash.merge')
+const eslintConfig = require('@holaluz/npm-scripts').eslint
+
+delete eslintConfig.parserOptions
+
+module.exports = merge(eslintConfig, {
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:@typescript-eslint/recommended',
@@ -12,10 +13,9 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
   ],
-  plugins: ['prettier'],
-  // add your custom rules here
   rules: {
     '@typescript-eslint/no-inferrable-types': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'array-callback-return': 'off',
   },
-}
+})

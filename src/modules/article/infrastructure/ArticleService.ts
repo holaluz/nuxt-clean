@@ -6,7 +6,6 @@ import {
 import { combine } from '@shared/Result'
 import { HttpResult } from '@shared/http/HttpResult'
 import { IHttpService } from '@shared/http/HttpService'
-import { IArticleDTO } from './ArticleParser'
 import * as ArticleDTO from './ArticleParser'
 
 /**
@@ -20,12 +19,12 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
   }
 
   async function getRecentArticles(): HttpResult<Article[]> {
-    function parseTo(articlesDTO: IArticleDTO[]) {
+    function parseTo(articlesDTO: ArticleDTO.IArticleDTO[]) {
       const listOfArticleResults = articlesDTO.map(ArticleDTO.toDomain)
       return combine(listOfArticleResults)
     }
 
-    const result = await httpService.get<IArticleDTO[], Article[]>(
+    const result = await httpService.get<ArticleDTO.IArticleDTO[], Article[]>(
       { url: '/posts' },
       { parseTo }
     )
@@ -34,13 +33,14 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
   }
 
   async function createArticle(article: EditingArticle): HttpResult<Article> {
-    const result = await httpService.post<IArticleDTO, Article>(
+    const result = await httpService.post<ArticleDTO.IArticleDTO, Article>(
       {
         url: '/posts',
         data: article,
       },
       {
-        parseTo: (articleDTO: IArticleDTO) => ArticleDTO.toDomain(articleDTO),
+        parseTo: (articleDTO: ArticleDTO.IArticleDTO) =>
+          ArticleDTO.toDomain(articleDTO),
 
         // not 100% sure about this
         parseFrom: (editingArticle: Article) =>
