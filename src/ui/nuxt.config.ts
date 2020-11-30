@@ -29,6 +29,8 @@ const config: NuxtConfig = {
    */
   buildModules: ['@nuxt/typescript-build'],
 
+  plugins: ['./plugins/veeValidate'],
+
   build: {
     extend(config) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
