@@ -3,7 +3,7 @@ import {
   EditingArticle,
   IArticleRepository,
 } from '@modules/article/domain'
-import { combine } from '@shared/Result'
+import { combine } from '@shared/result'
 import { HttpResult } from '@shared/http/HttpResult'
 import { IHttpService } from '@shared/http/HttpService'
 import * as ArticleDTO from './ArticleParser'

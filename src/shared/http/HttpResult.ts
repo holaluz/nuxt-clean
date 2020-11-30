@@ -1,4 +1,4 @@
-import { AsyncResult } from '@shared/Result'
+import { AsyncResult } from '@shared/result'
 import { HttpError } from '@shared/http/HttpError'
 import { ParseError } from './ParseError'
 
