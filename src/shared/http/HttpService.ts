@@ -7,7 +7,7 @@ import axios, {
 import { err, Result } from '@shared/result'
 import { HttpError } from '@shared/http/HttpError'
 import { HttpResult } from '@shared/http/HttpResult'
-import { ParseError } from '@shared/http/ParseError'
+import { ParseError } from '@shared/ParseError'
 
 type IHttpRequest = {
   url: string
