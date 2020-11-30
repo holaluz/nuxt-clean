@@ -28,34 +28,20 @@ const config: NuxtConfig = {
    ** Nuxt.js dev-modules
    */
   buildModules: ['@nuxt/typescript-build'],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-  ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
 
   build: {
     extend(config) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore "Property 'buildContext' does not exist on type 'NuxtOptionsBuild'"
-      const rootDir = this.buildContext.options.rootDir
-      const joinSrc = (p: string) => path.join(rootDir, 'src', p)
+      const rootDir: string = this.buildContext.options.rootDir
+      const joinSrc = (s: string) => path.join(rootDir, 'src', s)
 
       if (!config?.resolve?.alias) {
         throw new Error('webpack config aliases not found!')
       }
 
-      config.resolve.alias['@domain'] = joinSrc('domain')
-      config.resolve.alias['@application'] = joinSrc('application')
-      config.resolve.alias['@infrastructure'] = joinSrc('infrastructure')
-      config.resolve.alias['@ui'] = joinSrc('ui')
+      config.resolve.alias['@modules'] = joinSrc('modules')
+      config.resolve.alias['@shared'] = joinSrc('shared')
     },
   },
 }

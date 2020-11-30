@@ -1,4 +1,4 @@
-import { ok, err, Result } from './Result'
+import { ok, err, Result, combine } from './Result'
 
 describe('Result.Ok', () => {
   test('creates an Ok value', () => {
@@ -107,5 +107,40 @@ describe('Result.Err', () => {
     expect(okFolder).not.toHaveBeenCalled()
     expect(errFolder).toHaveBeenCalledTimes(1)
     expect(errFolder).toHaveBeenCalledWith(12)
+  })
+})
+
+describe('combine', () => {
+  test('creates an empty list from an empty list', () => {
+    const combination = combine([])
+
+    expect(combination.isOk()).toBe(true)
+
+    // Without this line TypeScript will not allow accessing val.value
+    if (combination.isErr()) return
+
+    expect(combination.value).toStrictEqual([])
+  })
+
+  test('creates a list of values from a list of valid results', () => {
+    const okValList = [ok(12), ok(13), ok(14)]
+
+    const combination = combine(okValList)
+
+    // Without this line TypeScript will not allow accessing val.value
+    if (combination.isErr()) return
+
+    expect(combination.value).toStrictEqual([12, 13, 14])
+  })
+
+  test('creates an error from a list with invalid result', () => {
+    const valList = [err(12), err(13), ok(14)]
+
+    const combination = combine(valList)
+
+    // Without this line TypeScript will not allow accessing val.error
+    if (combination.isOk()) return
+
+    expect(combination.error).toStrictEqual(12)
   })
 })

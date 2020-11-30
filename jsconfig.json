@@ -2,14 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": [ "./src/ui/*" ],
-      "@/*": [ "./src/ui/*" ],
       "@@/*": [ "./*" ],
       "~~/*": [ "./*" ],
-      "@domain/*": [ "./src/domain/*" ],
-      "@application/*": [ "./src/application/*" ],
-      "@infrastructure/*": [ "./src/infrastructure/*" ],
-      "@ui/*": [ "./src/ui/*" ],
+      "@modules/*": [ "./src/modules/*" ],
+      "@shared/*": [ "./src/shared/*" ],
+      "@ui/*": [ "./src/ui/*" ]
     }
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

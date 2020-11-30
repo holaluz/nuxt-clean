@@ -12,6 +12,25 @@ export const ok = <T, E>(value: T): Ok<T, E> => new Ok(value)
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
 export const err = <T, E>(err: E): Err<T, E> => new Err(err)
 
+/**
+ * Combine takes a list of Results and return a single Result.
+ * If all the Results in the list are Ok, then the return value will be a
+ * Ok containing a list of all the individual Ok values.
+ * If just one of the Results in the list is an Err then it short circuits
+ * and returns that Err value.
+ */
+export const combine = <T, E>(resultList: Result<T, E>[]): Result<T[], E> => {
+  return resultList.reduce(
+    (acc, result) =>
+      acc.isOk()
+        ? result.isErr()
+          ? err(result.error)
+          : acc.map((values) => values.concat(result.value))
+        : acc,
+    ok([]) as Result<T[], E>
+  )
+}
+
 class Ok<T, E> {
   constructor(readonly value: T) {}
 
@@ -48,8 +67,6 @@ class Ok<T, E> {
   fold<A>(ok: (t: T) => A, _err: (e: E) => A): A {
     return ok(this.value)
   }
-
-  // What additional helpers can we add here?
 }
 
 class Err<T, E> {

@@ -1,4 +1,4 @@
-import { Article } from '@domain/Article'
+import { Article } from '@modules/article/domain'
 
 export const state = () => ({
   loading: false,

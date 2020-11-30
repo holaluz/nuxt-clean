@@ -20,7 +20,7 @@ export const mockArticles = (): Article[] => [
     title: 'dolor sit amet',
     slug: 'dolor-sit-amet',
     body: 'dolor sit amet',
-    createdAt: '2020-02-15T09:00:00 +01:00',
+    createdAt: new Date(2019, 8, 9),
     favorited: true,
   },
 ]
