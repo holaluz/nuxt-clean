@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { merge } = require('lodash')
 const jestConfig = require('@holaluz/npm-scripts').jest
 

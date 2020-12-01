@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const merge = require('lodash.merge')
 const eslintConfig = require('@holaluz/npm-scripts').eslint
 
@@ -16,6 +15,7 @@ module.exports = merge(eslintConfig, {
   rules: {
     '@typescript-eslint/no-inferrable-types': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
     'array-callback-return': 'off',
   },
 })

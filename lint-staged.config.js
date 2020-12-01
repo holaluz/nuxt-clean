@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const merge = require('lodash.merge')
 const lintStagedConfig = require('@holaluz/npm-scripts').lintStaged
 
