@@ -1,4 +1,4 @@
-const { merge } = require('lodash')
+const merge = require('lodash.merge')
 const jestConfig = require('@holaluz/npm-scripts').jest
 
 module.exports = merge(jestConfig, {
