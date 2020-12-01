@@ -3,11 +3,7 @@
     "target": "ES2018",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": [
-      "ESNext",
-      "ESNext.AsyncIterable",
-      "DOM"
-    ],
+    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "allowJs": true,
@@ -19,21 +15,19 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@@/*": [ "./*" ],
-      "~~/*": [ "./*" ],
-      "@modules/*": [ "./src/modules/*" ],
-      "@shared/*": [ "./src/shared/*" ],
-      "@ui/*": [ "./src/ui/*" ]
+      "@@/*": ["./*"],
+      "~~/*": ["./*"],
+      "@modules/*": ["./src/modules/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@ui/*": ["./src/ui/*"]
     },
     "types": [
       "jest",
       "@types/node",
-      "@nuxt/types"
+      "@nuxt/types",
+      "cypress",
+      "@testing-library/cypress"
     ]
   },
-  "exclude": [
-    "node_modules",
-    ".nuxt",
-    "dist"
-  ]
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }

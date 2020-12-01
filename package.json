@@ -5,19 +5,24 @@
   "author": "Adrià Fontcuberta",
   "private": true,
   "scripts": {
-    "dev": "nuxt-ts src/ui --tsconfig .",
+    "dev": "nuxt-ts src/ui --tsconfig . --port 3000",
     "build": "nuxt-ts build src/ui --tsconfig .",
     "start": "nuxt-ts start src/ui --tsconfig .",
     "generate": "nuxt-ts generate src/ui --tsconfig .",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "format": "prettier '**/*.{js,ts,vue}' --write",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:e2e:dev": "cypress open",
+    "test:e2e:run": "cypress run"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
@@ -30,13 +35,16 @@
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxtjs/eslint-config-typescript": "^5.0.0",
     "@nuxtjs/eslint-module": "^3.0.1",
+    "@testing-library/cypress": "^7.0.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/vue": "^5.6.1",
+    "@types/cypress-cucumber-preprocessor": "^4.0.0",
     "@types/jest": "^26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
-    "cypress": "^6.0.0",
+    "cypress": "^6.0.1",
+    "cypress-cucumber-preprocessor": "^4.0.0",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-config-standard": "^16.0.2",
