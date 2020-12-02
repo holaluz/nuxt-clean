@@ -32,6 +32,8 @@ const config: NuxtConfig = {
   plugins: ['./plugins/veeValidate'],
 
   build: {
+    transpile: ['vee-validate/dist/rules'],
+
     extend(config) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore "Property 'buildContext' does not exist on type 'NuxtOptionsBuild'"
