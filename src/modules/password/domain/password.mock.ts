@@ -1,3 +1,3 @@
-import { UserPassword } from './password.types'
+import { createPassword } from './password.types'
 
-export const mockPassword = UserPassword('12345678')
+export const mockPassword = createPassword('12345678')

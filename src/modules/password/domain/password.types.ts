@@ -8,10 +8,10 @@ enum PasswordErrors {
   maxLength = 'maxLength',
 }
 
-type Password = Nominal<string, 'Password'>
+export type Password = Nominal<string, 'Password'>
 
 const validateMinLength = (s: string): ParseError | null =>
-  s.length <= 8
+  s.length < 8
     ? ParseError.fromError(new Error(PasswordErrors.minLength))
     : null
 
