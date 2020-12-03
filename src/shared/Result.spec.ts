@@ -127,6 +127,8 @@ describe('combine', () => {
 
     const combination = combine(okValList)
 
+    expect(combination.isOk()).toBe(true)
+
     // Without this line TypeScript will not allow accessing val.value
     if (combination.isErr()) return
 
@@ -137,6 +139,8 @@ describe('combine', () => {
     const valList = [err(12), err(13), ok(14)]
 
     const combination = combine(valList)
+
+    expect(combination.isErr()).toBe(true)
 
     // Without this line TypeScript will not allow accessing val.error
     if (combination.isOk()) return
