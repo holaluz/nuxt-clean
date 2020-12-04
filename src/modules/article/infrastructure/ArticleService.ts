@@ -37,7 +37,8 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
         data: parsedArticle,
       },
       {
-        parseTo: (articleDTO: ArticleDTO.IArticleDTO) => ArticleDTO.toDomain(articleDTO),
+        parseTo: (articleDTO: ArticleDTO.IArticleDTO) =>
+          ArticleDTO.toDomain(articleDTO),
       }
     )
 

@@ -20,7 +20,7 @@ type IHttpRequest = {
 type FailableParser<T, M> = (_: T) => Result<M, ParseError>
 
 type Parser<T, M> = {
-  parseTo: FailableParser<T, M> | (() => void)
+  parseTo: FailableParser<T, M>
 }
 
 export interface IHttpService {
