@@ -3,7 +3,6 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
 
 import { createPassword } from '@modules/password/domain'
-import { ParseError } from '@shared/ParseError'
 
 extend('password', (value: string) => {
   const result = createPassword(value)
@@ -11,7 +10,7 @@ extend('password', (value: string) => {
     return true
   }
 
-  return JSON.stringify(result.error.map((e: ParseError) => e.message))
+  return JSON.stringify(result.error.map((e) => e.message))
 })
 
 extend('required', {
@@ -28,5 +27,5 @@ extend('confirmed', {
 })
 
 // Register it globally
-Vue.component('validation-provider', ValidationProvider)
-Vue.component('validation-observer', ValidationObserver)
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
