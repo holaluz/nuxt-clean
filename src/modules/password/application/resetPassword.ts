@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { createPassword, IPasswordRepository } from '@modules/password/domain'
 import { HttpError, isHttpError } from '@shared/http/HttpError'
+import { ParseError } from '@shared/ParseError'
 
 type Parameters = {
   password: string
@@ -12,6 +12,7 @@ type Services = {
 
 type Callbacks = {
   respondWithSuccess: () => void
+  respondWithParseError: (e: ParseError[]) => void
   respondWithClientError: (e: HttpError) => void
   respondWithServerError: (e: HttpError) => void
   respondWithGenericError: (e: Error) => void
@@ -19,27 +20,27 @@ type Callbacks = {
 
 export function resetPassword({
   passwordService,
-}: Services): UseCase<Parameters, Callbacks> {
+}: Services): AsyncUseCase<Parameters, Callbacks> {
   return { execute }
 
   async function execute(
     { password }: Parameters,
     {
       respondWithSuccess,
+      respondWithParseError,
       respondWithClientError,
       respondWithServerError,
       respondWithGenericError,
     }: Callbacks
   ) {
-    const passwordDomainObject = createPassword(password)
-    if (passwordDomainObject.isErr()) {
-      console.log(passwordDomainObject.error) // TODO: Respond with parseError
+    const passwordResult = createPassword(password)
+
+    if (passwordResult.isErr()) {
+      respondWithParseError(passwordResult.error)
       return
     }
 
-    const value = passwordDomainObject.value
-
-    const result = await passwordService.resetPassword(value)
+    const result = await passwordService.resetPassword(passwordResult.value)
 
     if (result.isErr()) {
       const error = result.error
