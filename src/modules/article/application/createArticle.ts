@@ -19,7 +19,7 @@ type Callbacks = {
 
 export function createArticle({
   articleService,
-}: Services): UseCase<Parameters, Callbacks> {
+}: Services): AsyncUseCase<Parameters, Callbacks> {
   return { execute }
 
   async function execute(
