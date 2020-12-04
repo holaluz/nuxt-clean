@@ -17,5 +17,7 @@ module.exports = merge(eslintConfig, {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'array-callback-return': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
   },
 })
