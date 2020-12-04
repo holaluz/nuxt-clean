@@ -1,6 +1,6 @@
 import { createPassword, IPasswordRepository } from '@modules/password/domain'
 import { HttpError, isHttpError } from '@shared/http/HttpError'
-import { ParseError } from '@shared/ParseError'
+import { ParseError } from '@shared/parseError'
 
 type Parameters = {
   password: string

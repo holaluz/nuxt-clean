@@ -1,5 +1,5 @@
 import { Article } from '@modules/article/domain'
-import { ParseError } from '@shared/ParseError'
+import { ParseError } from '@shared/parseError'
 import { err, ok, combine, Result } from '@shared/result'
 import { createArticleTitle } from '../domain'
 

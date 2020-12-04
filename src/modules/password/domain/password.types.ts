@@ -1,7 +1,6 @@
 import { Result, err, ok } from '@shared/result'
-import { collectErrors } from '@shared/collectErrors'
 import { Nominal } from '@@/src/shared/Nominal'
-import { ParseError } from '@shared/ParseError'
+import { ParseError, collectParseErrors } from '@shared/parseError'
 
 enum PasswordErrors {
   minLength = 'minLength',
@@ -23,10 +22,12 @@ const validateMaxLength = (s: string): ParseError | null =>
 export function createPassword(
   password: string
 ): Result<Password, ParseError[]> {
-  const combined = collectErrors(
+  const collectedErrors = collectParseErrors(
     [validateMinLength, validateMaxLength],
     password
   )
 
-  return combined.length ? err(combined) : ok(password as Password)
+  return collectedErrors.length
+    ? err(collectedErrors)
+    : ok(password as Password)
 }
