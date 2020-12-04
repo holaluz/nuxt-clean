@@ -1,3 +1,4 @@
+import { ok } from '@@/src/shared/result'
 import { IPasswordRepository, Password } from '@modules/password/domain'
 import { HttpResult } from '@shared/http/HttpResult'
 import { IHttpService } from '@shared/http/HttpService'
@@ -9,15 +10,14 @@ export function PasswordService(
     resetPassword,
   }
 
-  async function resetPassword(password: Password): HttpResult<void> {
-    const result = await httpService.post<string, void>(
+  async function resetPassword(password: Password): HttpResult<string> {
+    const result = await httpService.post<string, string>(
       {
         url: '/posts',
         data: password,
       },
       {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        parseTo: () => {},
+        parseTo: (_password: string) => ok(_password),
       }
     )
 
