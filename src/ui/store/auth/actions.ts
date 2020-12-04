@@ -15,6 +15,9 @@ const actions: ActionTree<RootState, RootState> = {
         respondWithSuccess: () => {
           console.log('Reset password requested')
         },
+        respondWithParseError: () => {
+          console.log('Invalid Password')
+        },
         respondWithClientError: (error) => {
           console.log('ClientError', error.message)
         },
