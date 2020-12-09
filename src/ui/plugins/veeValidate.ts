@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import { required } from 'vee-validate/dist/rules'
+import { required, confirmed } from 'vee-validate/dist/rules'
 
 import { createPassword } from '@modules/password/domain'
 
@@ -10,6 +10,8 @@ extend('password', (value: string) => {
     return true
   }
 
+  console.log('this --> ', this)
+
   return JSON.stringify(result.error.map((e) => e.message))
 })
 
@@ -18,13 +20,7 @@ extend('required', {
   message: 'required',
 })
 
-extend('confirmed', {
-  params: ['target'],
-  validate(baseValue, { target }) {
-    return baseValue === target
-  },
-  message: 'confirmed',
-})
+extend('confirmed', { ...confirmed, message: 'confirmed' })
 
 // Register it globally
 Vue.component('ValidationProvider', ValidationProvider)
