@@ -46,6 +46,7 @@ const config: NuxtConfig = {
 
       config.resolve.alias['@modules'] = joinSrc('modules')
       config.resolve.alias['@shared'] = joinSrc('shared')
+      config.resolve.alias['@ui'] = joinSrc('ui')
     },
   },
 }
