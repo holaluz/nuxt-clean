@@ -10,7 +10,6 @@ extend('password', (value: string) => {
     return true
   }
 
-  console.log('this --> ', this)
 
   return JSON.stringify(result.error.map((e) => e.message))
 })
