@@ -5,6 +5,7 @@ import { ParseError, collectParseErrors } from '@shared/parseError'
 enum PasswordErrors {
   minLength = 'minLength',
   maxLength = 'maxLength',
+  noNumb = 'noNumb',
 }
 
 export type Password = Nominal<string, 'Password'>
@@ -19,11 +20,16 @@ const validateMaxLength = (s: string): ParseError | null =>
     ? ParseError.fromError(new Error(PasswordErrors.maxLength))
     : null
 
+const validateContainsNumb = (s: string): ParseError | null =>
+  !s.match(/.*\d.*/)
+    ? ParseError.fromError(new Error(PasswordErrors.noNumb))
+    : null
+
 export function createPassword(
   password: string
 ): Result<Password, ParseError[]> {
   const collectedErrors = collectParseErrors(
-    [validateMinLength, validateMaxLength],
+    [validateMinLength, validateMaxLength, validateContainsNumb],
     password
   )
 
