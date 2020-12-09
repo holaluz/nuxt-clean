@@ -2,43 +2,21 @@
   <div class="container">
     <validation-observer v-slot="{ invalid, handleSubmit }">
       <form class="form" @submit.prevent="handleSubmit(onSubmit)">
-        <validation-provider
-          v-slot="{ errors }"
+        <text-input
+          v-model="password"
+          rules="required|password"
+          vid="basePassword"
+          label="Password"
           :bails="false"
-          name="basePassword"
-          rules="password|required"
-        >
-          <div>
-            <label>
-              Password
-              <input v-model="password" type="text" />
-            </label>
-            <p
-              v-for="(error, i) in errors"
-              :key="i"
-              class="error-msg"
-              v-text="error"
-            />
-          </div>
-        </validation-provider>
-        <validation-provider
-          v-slot="{ errors }"
+          type="text"
+        />
+        <text-input
+          v-model="repeatedPassword"
+          rules="required|password|confirmed:basePassword"
+          label="Repeat Password"
           :bails="false"
-          rules="password|required|confirmed:@basePassword"
-        >
-          <div>
-            <label>
-              Repeat password
-              <input v-model="repeatedPassword" type="text" />
-            </label>
-            <p
-              v-for="(error, i) in errors"
-              :key="i"
-              class="error-msg"
-              v-text="error"
-            />
-          </div>
-        </validation-provider>
+          type="text"
+        />
         <input
           type="submit"
           class="submit"
@@ -52,9 +30,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import TextInput from '@ui/components/TextInput'
 
 export default Vue.extend({
   name: 'ResetPassword',
+
+  components: { TextInput },
 
   data() {
     return {
@@ -92,9 +73,5 @@ html {
 .submit {
   cursor: pointer;
   font-size: 1rem;
-}
-
-.error-msg {
-  color: #a71313;
 }
 </style>

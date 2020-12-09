@@ -21,5 +21,4 @@ extend('required', {
 extend('confirmed', { ...confirmed, message: 'confirmed' })
 
 // Register it globally
-Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
