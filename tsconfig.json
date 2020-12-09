@@ -26,7 +26,8 @@
       "@types/node",
       "@nuxt/types",
       "cypress",
-      "@testing-library/cypress"
+      "@testing-library/cypress",
+      "vee-validate"
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

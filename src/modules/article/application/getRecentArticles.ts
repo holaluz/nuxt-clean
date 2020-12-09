@@ -16,7 +16,7 @@ type Callbacks = {
 
 export function getRecentArticles({
   articleService,
-}: Services): UseCase<Parameters, Callbacks> {
+}: Services): AsyncUseCase<Parameters, Callbacks> {
   return { execute }
 
   async function execute(

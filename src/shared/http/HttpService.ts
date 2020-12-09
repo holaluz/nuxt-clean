@@ -4,10 +4,10 @@ import axios, {
   AxiosRequestConfig,
   AxiosError,
 } from 'axios'
-import { err, Result } from '@shared/Result'
+import { err, Result } from '@shared/result'
 import { HttpError } from '@shared/http/HttpError'
 import { HttpResult } from '@shared/http/HttpResult'
-import { ParseError } from '@shared/http/ParseError'
+import { ParseError } from '@shared/parseError'
 
 type IHttpRequest = {
   url: string
@@ -16,20 +16,16 @@ type IHttpRequest = {
   data?: any
 }
 
-type Parser<T, M> = (_: T) => M
-
 // A FailableParser is just a Parser wrapped in a Result
 type FailableParser<T, M> = (_: T) => Result<M, ParseError>
 
-type GetParser<T, M> = {
+type Parser<T, M> = {
   parseTo: FailableParser<T, M>
 }
 
-type PostParser<T, M> = GetParser<T, M> & { parseFrom: Parser<M, T> }
-
 export interface IHttpService {
-  get<T, M>(request: IHttpRequest, parser: GetParser<T, M>): HttpResult<M>
-  post<T, M>(request: IHttpRequest, parser: PostParser<T, M>): HttpResult<M>
+  get<T, M>(request: IHttpRequest, parser: Parser<T, M>): HttpResult<M>
+  post<T, M>(request: IHttpRequest, parser: Parser<T, M>): HttpResult<M>
 }
 
 export class HttpService {
@@ -47,7 +43,7 @@ export class HttpService {
 
   public async get<T, M>(
     { url, config }: IHttpRequest,
-    parser: GetParser<T, M>
+    parser: Parser<T, M>
   ): HttpResult<M> {
     try {
       const response = await this.axiosService.get<T>(url, config)
@@ -59,12 +55,10 @@ export class HttpService {
 
   public async post<T, M>(
     { url, data, config }: IHttpRequest,
-    parser: PostParser<T, M>
+    parser: Parser<T, M>
   ): HttpResult<M> {
     try {
-      const requestData = data ? parser.parseFrom(data) : {}
-
-      const response = await this.axiosService.post<T>(url, requestData, config)
+      const response = await this.axiosService.post<T>(url, data, config)
       return this._parseFailable<T, M>(response.data, parser.parseTo)
     } catch (error) {
       return err(error)

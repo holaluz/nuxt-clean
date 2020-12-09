@@ -1,40 +1,46 @@
-/* eslint-disable no-console */
-import { EditingArticle, IArticleRepository } from '@modules/article/domain'
+import { createPassword, IPasswordRepository } from '@modules/password/domain'
 import { HttpError, isHttpError } from '@shared/http/HttpError'
+import { ParseError } from '@shared/parseError'
 
 type Parameters = {
-  editingArticle: EditingArticle
+  password: string
 }
 
 type Services = {
-  articleService: IArticleRepository
+  passwordService: IPasswordRepository
 }
 
 type Callbacks = {
   respondWithSuccess: () => void
+  respondWithParseError: (e: ParseError[]) => void
   respondWithClientError: (e: HttpError) => void
   respondWithServerError: (e: HttpError) => void
   respondWithGenericError: (e: Error) => void
 }
 
-export function createArticle({
-  articleService,
+export function resetPassword({
+  passwordService,
 }: Services): AsyncUseCase<Parameters, Callbacks> {
   return { execute }
 
   async function execute(
-    { editingArticle }: Parameters,
+    { password }: Parameters,
     {
       respondWithSuccess,
+      respondWithParseError,
       respondWithClientError,
       respondWithServerError,
       respondWithGenericError,
     }: Callbacks
   ) {
-    const result = await articleService.createArticle({
-      ...editingArticle,
-      createdAt: new Date(),
-    })
+    const passwordResult = createPassword(password)
+
+    if (passwordResult.isErr()) {
+      respondWithParseError(passwordResult.error)
+      return
+    }
+
+    const result = await passwordService.resetPassword(passwordResult.value)
 
     if (result.isErr()) {
       const error = result.error

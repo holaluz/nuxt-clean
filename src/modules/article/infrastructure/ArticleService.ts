@@ -1,9 +1,5 @@
-import {
-  Article,
-  EditingArticle,
-  IArticleRepository,
-} from '@modules/article/domain'
-import { combine } from '@shared/Result'
+import { Article, IArticleRepository } from '@modules/article/domain'
+import { combine } from '@shared/result'
 import { HttpResult } from '@shared/http/HttpResult'
 import { IHttpService } from '@shared/http/HttpService'
 import * as ArticleDTO from './ArticleParser'
@@ -32,19 +28,17 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
     return result
   }
 
-  async function createArticle(article: EditingArticle): HttpResult<Article> {
+  async function createArticle(article: Article): HttpResult<Article> {
+    const parsedArticle = ArticleDTO.fromDomain(article)
+
     const result = await httpService.post<ArticleDTO.IArticleDTO, Article>(
       {
         url: '/posts',
-        data: article,
+        data: parsedArticle,
       },
       {
         parseTo: (articleDTO: ArticleDTO.IArticleDTO) =>
           ArticleDTO.toDomain(articleDTO),
-
-        // not 100% sure about this
-        parseFrom: (editingArticle: Article) =>
-          ArticleDTO.fromDomain(editingArticle),
       }
     )
 
