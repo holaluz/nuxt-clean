@@ -6,14 +6,14 @@
           v-model="password"
           rules="required|password"
           vid="basePassword"
-          label="Password"
+          :label="$t('password')"
           :bails="false"
           type="text"
         />
         <text-input
           v-model="repeatedPassword"
           rules="required|password|confirmed:basePassword"
-          label="Repeat Password"
+          :label="$t('repeat_password')"
           :bails="false"
           type="text"
         />
@@ -34,6 +34,14 @@ import TextInput from '@ui/components/TextInput'
 
 export default Vue.extend({
   name: 'ResetPassword',
+
+  nuxtI18n: {
+    paths: {
+      es: '/cambiar-contraseña',
+      ca: '/canviar-contrasenya',
+      en: '/reset-password',
+    },
+  },
 
   components: { TextInput },
 
