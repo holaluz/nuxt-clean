@@ -29,6 +29,23 @@ const config: NuxtConfig = {
    */
   buildModules: ['@nuxt/typescript-build'],
 
+  modules: [
+    [
+      'nuxt-i18n',
+      {
+        defaultLocale: 'en',
+        langDir: './locales/',
+        lazy: true,
+        strategy: 'prefix_except_default',
+        locales: [
+          { code: 'es', name: 'Español', iso: 'es-ES', file: 'es.json' },
+          { code: 'ca', name: 'Català', iso: 'ca-ES', file: 'ca.json' },
+          { code: 'en', name: 'English', iso: 'en-EN', file: 'en.json' },
+        ],
+      },
+    ],
+  ],
+
   plugins: ['./plugins/veeValidate'],
 
   build: {
