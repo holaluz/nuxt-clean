@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
+import { ValidationObserver, extend } from 'vee-validate'
 import { required, confirmed } from 'vee-validate/dist/rules'
 
 import { createPassword } from '@modules/password/domain'
