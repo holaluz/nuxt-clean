@@ -1,0 +1,11 @@
+{
+  "field_errors": {
+    "minLength": "The field should have at least {length} characters",
+    "maxLength": "The field cannot have more than {length} characters",
+    "noNumb": "The field should inlcude a numeric character",
+    "required": "The field is required",
+    "confirmed": "Required fields do not match"
+  },
+  "password": "Password",
+  "repeat_password": "Repeat password"
+}
