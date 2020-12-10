@@ -29,7 +29,7 @@ const config: NuxtConfig = {
    */
   buildModules: ['@nuxt/typescript-build'],
 
-  plugins: ['./plugins/veeValidate'],
+  plugins: ['./plugins/vee-validate'],
 
   build: {
     transpile: ['vee-validate/dist/rules'],
