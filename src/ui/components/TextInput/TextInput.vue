@@ -1,25 +1,17 @@
 <template>
   <validation-provider
     v-slot="{ errors, required }"
-    :ref="label"
     class="text-input"
     tag="div"
-    :vid="vid"
+    :vid="id"
     :rules="rules"
-    :name="label"
     :bails="bails"
   >
-    <label :for="label">
+    <label :for="id">
       <span v-text="label" />
       <span v-if="required" v-text="'*'" />
     </label>
-    <input
-      :id="label"
-      v-model="innerValue"
-      :disabled="disabled"
-      :type="type"
-      :placeholder="placeholder"
-    />
+    <input :id="id" v-model="innerValue" v-bind="$attrs" />
     <ul v-if="errors.length" class="err-list">
       <li
         v-for="err in getErrorMsgs(errors)"
@@ -34,16 +26,6 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 
-const INPUT_TYPES = [
-  'url',
-  'text',
-  'password',
-  'tel',
-  'search',
-  'number',
-  'email',
-]
-
 export default {
   name: 'TextInput',
 
@@ -52,8 +34,7 @@ export default {
   },
 
   props: {
-    // Needed for cross-fields validations
-    vid: {
+    id: {
       type: String,
       default: undefined,
     },
@@ -61,11 +42,6 @@ export default {
     bails: {
       type: Boolean,
       default: true,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
     },
 
     label: {
@@ -76,17 +52,6 @@ export default {
     rules: {
       type: [Object, String],
       default: '',
-    },
-
-    placeholder: {
-      type: String,
-      default: '',
-    },
-
-    type: {
-      type: String,
-      default: 'text',
-      validator: (val) => INPUT_TYPES.includes(val),
     },
 
     value: {

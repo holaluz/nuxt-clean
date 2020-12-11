@@ -3,6 +3,7 @@
     <validation-observer v-slot="{ invalid, handleSubmit }">
       <form class="form" @submit.prevent="handleSubmit(onSubmit)">
         <text-input
+          id="basePassword"
           v-model="password"
           rules="required|password"
           vid="basePassword"
