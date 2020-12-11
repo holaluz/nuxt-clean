@@ -14,22 +14,22 @@ const veeValidate: Plugin = ({ app }) => {
     },
   })
 
-  function _parseDomainErrors(domainErrors: ParseError[]) {
-    const errorMsgs = domainErrors.map((e) =>
-      app.i18n.t(`field_errors.${e.message}`, e.getValues())
-    )
-    return JSON.stringify({ errors: errorMsgs })
-  }
-
   extend('password', (value: string) => {
     const result = createPassword(value)
 
-    return result.isOk() || _parseDomainErrors(result.error)
+    return result.isOk() || _stringifyDomainErrors(result.error)
   })
 
   extend('required', required)
 
   extend('confirmed', confirmed)
+
+  function _stringifyDomainErrors(domainErrors: ParseError[]) {
+    const errorMsgs = domainErrors.map((e) =>
+      app.i18n.t(`field_errors.${e.message}`, e.getValues())
+    )
+    return JSON.stringify({ errors: errorMsgs })
+  }
 }
 
 export default veeValidate
