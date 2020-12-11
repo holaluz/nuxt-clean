@@ -24,7 +24,7 @@ const veeValidate: Plugin = ({ app }) => {
   extend('password', (value: string) => {
     const result = createPassword(value)
 
-    return result.isOk() ? true : _parseDomainErrors(result.error)
+    return result.isOk() || _parseDomainErrors(result.error)
   })
 
   extend('required', required)
