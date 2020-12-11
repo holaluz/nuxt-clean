@@ -36,7 +36,7 @@ const config: NuxtConfig = {
         defaultLocale: 'en',
         langDir: './locales/',
         lazy: true,
-        strategy: 'prefix_except_default',
+        strategy: 'no_prefix',
         locales: [
           { code: 'es', name: 'Español', iso: 'es-ES', file: 'es.json' },
           { code: 'ca', name: 'Català', iso: 'ca-ES', file: 'ca.json' },
