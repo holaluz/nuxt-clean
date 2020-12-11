@@ -1,8 +1,14 @@
 import Vue from 'vue'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
+import { ValidationObserver, extend } from 'vee-validate'
 import { required, confirmed } from 'vee-validate/dist/rules'
 
 import { createPassword } from '@modules/password/domain'
+import { ParseError } from '@@/src/shared/parseError'
+
+function _parseDomainErrors(domainErrors: ParseError[]) {
+  const errorMsgs = domainErrors.map((e) => e.message)
+  return JSON.stringify({ errors: errorMsgs })
+}
 
 extend('password', (value: string) => {
   const result = createPassword(value)
@@ -10,7 +16,7 @@ extend('password', (value: string) => {
     return true
   }
 
-  return JSON.stringify(result.error.map((e) => e.message))
+  return _parseDomainErrors(result.error)
 })
 
 extend('required', {
@@ -21,5 +27,4 @@ extend('required', {
 extend('confirmed', { ...confirmed, message: 'confirmed' })
 
 // Register it globally
-Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
