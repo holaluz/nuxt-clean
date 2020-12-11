@@ -1,0 +1,11 @@
+{
+  "field_errors": {
+    "minLength": "El campo debe tener {length} caracteres como mínimo",
+    "maxLength": "El campo no puede tener más de {length} caracteres",
+    "noNumb": "El campo debe tener un valor numérico",
+    "required": "El campo es obligatorio",
+    "confirmed": "Los campos no coinciden"
+  },
+  "password": "Contraseña",
+  "repeat_password": "Repetir contraseña"
+}
