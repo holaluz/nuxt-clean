@@ -38,6 +38,7 @@
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxtjs/eslint-config-typescript": "^5.0.0",
     "@nuxtjs/eslint-module": "^3.0.1",
+    "@nuxtjs/style-resources": "^1.0.0",
     "@testing-library/cypress": "^7.0.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/vue": "^5.6.1",
