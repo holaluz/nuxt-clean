@@ -1,6 +1,5 @@
-import Vue from 'vue'
 import { Plugin } from '@nuxt/types'
-import { ValidationObserver, extend, configure } from 'vee-validate'
+import { extend, configure } from 'vee-validate'
 import { required, confirmed } from 'vee-validate/dist/rules'
 import VueI18n from 'vue-i18n'
 
@@ -37,6 +36,3 @@ export function configureVeeValidate(i18n: VueI18n) {
     return JSON.stringify({ errors: errorMsgs })
   }
 }
-
-// Register it globally
-Vue.component('ValidationObserver', ValidationObserver)
