@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { Plugin } from '@nuxt/types'
 import { ValidationObserver, extend, configure } from 'vee-validate'
 import { required, confirmed } from 'vee-validate/dist/rules'
+import VueI18n from 'vue-i18n'
 
 import { createPassword } from '@modules/password/domain'
 import { ParseError } from '@@/src/shared/parseError'
@@ -12,27 +13,27 @@ const veeValidate: Plugin = ({ app }) => {
 
 export default veeValidate
 
-export function configureVeeValidate(i18n: any) {
+export function configureVeeValidate(i18n: VueI18n) {
   configure({
-    defaultMessage: (_, values) => {
-      return i18n.t(`field_errors.${values._rule_}`, values) as string
-    },
-  })
-
-  extend('password', (value: string) => {
-    const result = createPassword(value)
-
-    return result.isOk() || _stringifyDomainErrors(result.error)
+    defaultMessage: (_, values) =>
+      i18n.t(`field_errors.${values._rule_}`, values) as string,
   })
 
   extend('required', required)
-
   extend('confirmed', confirmed)
+  extend('password', password)
 
-  function _stringifyDomainErrors(domainErrors: ParseError[]) {
+  function password(value: string) {
+    const result = createPassword(value).mapErr(translateAndStringifyError)
+
+    return result.isOk() || result.error
+  }
+
+  function translateAndStringifyError(domainErrors: ParseError[]) {
     const errorMsgs = domainErrors.map((e) =>
       i18n.t(`field_errors.${e.message}`, e.getValues())
     )
+
     return JSON.stringify({ errors: errorMsgs })
   }
 }
