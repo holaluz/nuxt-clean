@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@ui/utils/test'
+import { render, fireEvent } from '@ui/utils/nuxt-clean-test-utils'
 import resetPassword from './index.vue'
 
 describe('Reset password page', () => {
