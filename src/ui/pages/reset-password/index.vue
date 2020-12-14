@@ -42,10 +42,6 @@ export default Vue.extend({
     }
   },
 
-  mounted() {
-    console.log(this.$i18n.locale)
-  },
-
   methods: {
     async onSubmit() {
       await this.$store.dispatch('auth/resetPassword', this.password)

@@ -9,11 +9,12 @@ describe('Reset password page', () => {
   })
 
   test('displays password errors when it should', async () => {
-    const { getByLabelText, findByText, debug } = render(resetPassword)
+    const { getByLabelText, findByText } = render(resetPassword)
 
     await fireEvent.update(getByLabelText(/Password/i), '1')
 
-    debug()
-    expect(await findByText(/minLength/i)).toBeInTheDocument()
+    expect(
+      await findByText(/The field should have at least 8 characters/i)
+    ).toBeInTheDocument()
   })
 })
