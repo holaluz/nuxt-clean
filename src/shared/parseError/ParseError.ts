@@ -1,12 +1,23 @@
 export class ParseError extends Error {
-  private constructor(error: Error) {
+  private values?: Record<string, unknown>
+
+  private constructor(error: Error, values?: Record<string, unknown>) {
     super(error.message)
 
     Object.setPrototypeOf(this, ParseError.prototype)
+    this.values = values
   }
 
   public static fromError(error: Error) {
     return new this(error)
+  }
+
+  public static fromUIValidation(validationName = '', validationValues = {}) {
+    return new this(new Error(validationName), validationValues)
+  }
+
+  public getValues() {
+    return this.values
   }
 }
 

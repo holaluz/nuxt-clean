@@ -9,14 +9,21 @@ enum PasswordErrors {
 
 export type Password = Nominal<string, 'Password'>
 
+const passwordMinLength = 8
+const passwordMaxLength = 10
+
 const validateMinLength = (s: string): ParseError | null =>
-  s.length < 8
-    ? ParseError.fromError(new Error(PasswordErrors.minLength))
+  s.length < passwordMinLength
+    ? ParseError.fromUIValidation(PasswordErrors.minLength, {
+        [PasswordErrors.minLength]: passwordMinLength,
+      })
     : null
 
 const validateMaxLength = (s: string): ParseError | null =>
-  s.length > 10
-    ? ParseError.fromError(new Error(PasswordErrors.maxLength))
+  s.length > passwordMaxLength
+    ? ParseError.fromUIValidation(PasswordErrors.maxLength, {
+        [PasswordErrors.maxLength]: passwordMaxLength,
+      })
     : null
 
 export function createPassword(

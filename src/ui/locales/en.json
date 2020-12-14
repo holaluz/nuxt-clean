@@ -1,7 +1,7 @@
 {
   "field_errors": {
-    "minLength": "The field should have at least {length} characters",
-    "maxLength": "The field cannot have more than {length} characters",
+    "minLength": "The field should have at least {minLength} characters",
+    "maxLength": "The field cannot have more than {maxLength} characters",
     "noNumb": "The field should inlcude a numeric character",
     "required": "The field is required",
     "confirmed": "Required fields do not match"

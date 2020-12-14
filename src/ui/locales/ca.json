@@ -1,7 +1,7 @@
 {
   "field_errors": {
-    "minLength": "La llargada ha de tenir un mínim de {length} caràcters",
-    "maxLength": "La llargada màxima és de {length} caràcters",
+    "minLength": "La llargada ha de tenir un mínim de {minLength} caràcters",
+    "maxLength": "La llargada màxima és de {maxLength} caràcters",
     "noNumb": "El camp ha d'incloure un valor numèric",
     "required": "El camp es obligatori",
     "confirmed": "Els camps no coincideixen"
