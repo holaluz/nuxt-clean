@@ -28,17 +28,22 @@
 <script lang="ts">
 import Vue from 'vue'
 import TextInput from '@ui/components/TextInput'
+import { ValidationObserver } from 'vee-validate'
 
 export default Vue.extend({
   name: 'ResetPassword',
 
-  components: { TextInput },
+  components: { TextInput, ValidationObserver },
 
   data() {
     return {
       password: '',
       repeatedPassword: '',
     }
+  },
+
+  mounted() {
+    console.log(this.$i18n.locale)
   },
 
   methods: {
