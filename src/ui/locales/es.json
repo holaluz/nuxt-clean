@@ -1,4 +1,5 @@
 {
+  "required": "obligatorio",
   "field_errors": {
     "minLength": "El campo debe tener {length} caracteres como mínimo",
     "maxLength": "El campo no puede tener más de {length} caracteres",

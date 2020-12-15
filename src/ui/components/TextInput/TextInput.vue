@@ -7,11 +7,14 @@
     :rules="rules"
     :bails="bails"
   >
-    <label :for="id">
-      <span v-text="label" />
-      <span v-if="required" v-text="'*'" />
-    </label>
-    <input :id="id" v-model="innerValue" v-bind="$attrs" />
+    <ma-text-field :id="id" v-model="innerValue" :label="label" v-bind="$attrs">
+      <p
+        v-if="required"
+        slot="labelSibling"
+        class="required"
+        v-text="$t('required')"
+      />
+    </ma-text-field>
     <ul v-if="errors.length" class="err-list">
       <li
         v-for="err in getErrorMsgs(errors)"
@@ -98,7 +101,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .text-input {
   display: flex;
   flex-direction: column;
@@ -111,6 +114,12 @@ export default {
 }
 
 .err-msg {
-  color: #a71313;
+  color: get-color(red);
+}
+
+.required {
+  color: $shadow-dark;
+  font-size: 0.85rem;
+  font-style: italic;
 }
 </style>
