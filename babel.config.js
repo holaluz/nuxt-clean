@@ -1,7 +1,3 @@
-module.exports = {
-  env: {
-    test: {
-      presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
-    },
-  },
-}
+const babelConfig = require('@holaluz/npm-scripts').babel
+
+module.exports = babelConfig
