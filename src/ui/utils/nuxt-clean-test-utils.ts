@@ -1,6 +1,7 @@
 import { render as VTLrender } from '@testing-library/vue'
 
 import VueI18n from 'vue-i18n'
+import Margarita from '@holaluz/margarita'
 import { configureVeeValidate } from '@ui/plugins/veeValidate'
 
 import locales from '@ui/locales/en.json'
@@ -36,6 +37,7 @@ const render: typeof VTLrender = (
     },
     (localVue, ...args) => {
       localVue.use(VueI18n)
+      localVue.use(Margarita)
 
       const i18n = new VueI18n({
         locale: 'en',
