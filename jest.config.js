@@ -14,5 +14,7 @@ module.exports = merge(jestConfig, {
   setupFilesAfterEnv: [...jestConfig.setupFilesAfterEnv, './jest.setup.ts'],
   transform: {
     '^.+\\.ts$': 'ts-jest',
+    'vee-validate/dist/rules': 'babel-jest',
   },
+  transformIgnorePatterns: ['node_modules/(?!(vee-validate/dist/rules))'],
 })
