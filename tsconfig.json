@@ -22,15 +22,7 @@
       "@shared/*": ["./src/shared/*"],
       "@ui/*": ["./src/ui/*"]
     },
-    "types": [
-      "jest",
-      "@types/node",
-      "@nuxt/types",
-      "cypress",
-      "@testing-library/cypress",
-      "vee-validate",
-      "nuxt-i18n"
-    ]
+    "types": ["jest", "node", "@nuxt/types", "vee-validate", "nuxt-i18n"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
