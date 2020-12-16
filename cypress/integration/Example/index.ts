@@ -26,7 +26,7 @@ Then('a new article is created', () => {
   cy.findByText(/Everything went better than expected/i)
 
   cy.wait('@createPost').should(({ response }) => {
-    expect(response.statusCode).to.equal(201)
-    expect(response.body).to.include({ title, slug })
+    expect(response?.statusCode).to.equal(201)
+    expect(response?.body).to.include({ title, slug })
   })
 })
