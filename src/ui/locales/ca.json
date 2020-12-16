@@ -1,4 +1,5 @@
 {
+  "required": "obligatori",
   "field_errors": {
     "minLength": "La llargada ha de tenir un mínim de {minLength} caràcters",
     "maxLength": "La llargada màxima és de {maxLength} caràcters",

@@ -30,6 +30,7 @@ const config: NuxtConfig = {
   buildModules: ['@nuxt/typescript-build'],
 
   modules: [
+    '@nuxtjs/style-resources',
     [
       'nuxt-i18n',
       {
@@ -46,7 +47,11 @@ const config: NuxtConfig = {
     ],
   ],
 
-  plugins: ['./plugins/veeValidate'],
+  plugins: ['./plugins/veeValidate', './plugins/margarita'],
+
+  styleResources: {
+    scss: ['@holaluz/margarita/dist/scss/_margarita-tokens.scss'],
+  },
 
   build: {
     transpile: ['vee-validate/dist/rules'],

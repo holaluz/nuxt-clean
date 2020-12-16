@@ -17,12 +17,9 @@
           :bails="false"
           type="text"
         />
-        <input
-          type="submit"
-          class="submit"
-          value="Reset Pass"
-          :disabled="invalid"
-        />
+        <ma-button class="submit" :disabled="invalid">
+          Reset Password
+        </ma-button>
       </form>
     </validation-observer>
   </div>
@@ -47,7 +44,6 @@ export default Vue.extend({
   methods: {
     async onSubmit() {
       await this.$store.dispatch('auth/resetPassword', this.password)
-      console.log('Submit clicked')
     },
   },
 })
