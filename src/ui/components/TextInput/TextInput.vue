@@ -101,7 +101,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .text-input {
   display: flex;
   flex-direction: column;
@@ -109,16 +109,15 @@ export default {
 
 .err-list {
   list-style: none;
-  padding-top: 4px;
+  padding-top: var(--spacing-xxsmall);
   padding-left: 0;
 }
 
 .err-msg {
-  color: get-color(red);
+  color: var(--color-red-base);
 }
 
 .required {
-  color: $shadow-dark;
   font-size: 0.85rem;
   font-style: italic;
 }
