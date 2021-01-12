@@ -109,7 +109,7 @@ export default {
 
 .err-list {
   list-style: none;
-  padding-top: var(--spacing-xxsmall);
+  padding-top: var(--spacing-xsmall);
   padding-left: 0;
 }
 
