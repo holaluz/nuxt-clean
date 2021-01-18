@@ -26,10 +26,11 @@
   </validation-provider>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { ValidationProvider } from 'vee-validate'
 
-export default {
+export default Vue.extend({
   name: 'TextInput',
 
   components: {
@@ -58,7 +59,7 @@ export default {
     },
 
     value: {
-      type: null,
+      type: String,
       default: '',
     },
   },
@@ -87,18 +88,18 @@ export default {
   },
 
   methods: {
-    getErrorMsgs(err) {
-      return err.reduce((acc, cur) => {
+    getErrorMsgs(errorList: string[]): string[] {
+      return errorList.reduce((acc, cur) => {
         if (cur.startsWith('{')) {
           const { errors } = JSON.parse(cur)
           return [...acc, ...errors]
         }
 
         return [...acc, cur]
-      }, [])
+      }, [] as string[])
     },
   },
-}
+})
 </script>
 
 <style scoped>
