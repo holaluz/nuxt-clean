@@ -8,6 +8,8 @@ const config: NuxtConfig = {
 
   srcDir: 'src/ui',
 
+  modern: 'client',
+
   /*
    ** Headers of the page
    */

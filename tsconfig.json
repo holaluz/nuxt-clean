@@ -24,5 +24,6 @@
     },
     "types": ["jest", "node", "@nuxt/types", "vee-validate", "nuxt-i18n"]
   },
+  "include": ["src/**/*", "./jest.setup.ts"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
