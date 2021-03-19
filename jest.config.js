@@ -1,14 +1,17 @@
+const { pathsToModuleNameMapper } = require('ts-jest/utils')
 const merge = require('lodash.merge')
 const jestConfig = require('@holaluz/npm-scripts').jest
+const { compilerOptions } = require('./tsconfig.json')
+
+const moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
+  prefix: '<rootDir>',
+})
 
 module.exports = merge(jestConfig, {
   moduleNameMapper: {
     '^@@/(?!node_modules)(.*)$': '<rootDir>/$1',
     '^~~/(?!node_modules)(.*)$': '<rootDir>/src/$1',
-    '^@modules/(.*)': '<rootDir>/src/modules/$1',
-    '^@shared/(.*)': '<rootDir>/src/shared/$1',
-    '^@ui/(.*)': '<rootDir>/src/ui/$1',
-    '^vue$': 'vue/dist/vue.common.js',
+    ...moduleNameMapper,
   },
   moduleFileExtensions: ['ts', 'js', 'vue', 'json'],
   setupFilesAfterEnv: [...jestConfig.setupFilesAfterEnv, './jest.setup.ts'],
