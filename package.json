@@ -41,6 +41,7 @@
     "@nuxtjs/eslint-module": "^3.0.2",
     "@testing-library/cypress": "^7.0.4",
     "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/user-event": "^13.0.6",
     "@testing-library/vue": "^5.6.1",
     "@types/cypress-cucumber-preprocessor": "^4.0.0",
     "@types/jest": "^26.0.21",

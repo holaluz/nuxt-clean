@@ -1,4 +1,4 @@
-import { render } from '@testing-library/vue'
+import { render } from '@ui/utils/nuxt-clean-test-utils'
 import AddArticleForm from '@ui/components/AddArticleForm.vue'
 
 test('make sure testing UI env works', () => {

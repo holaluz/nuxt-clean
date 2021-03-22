@@ -12,7 +12,7 @@ type Services = {
 
 type Callbacks = {
   respondWithSuccess: () => void
-  respondWithParseError: (e: ParseError[]) => void
+  respondWithParseError: (e: ParseError) => void
   respondWithClientError: (e: HttpError) => void
   respondWithServerError: (e: HttpError) => void
   respondWithGenericError: (e: Error) => void

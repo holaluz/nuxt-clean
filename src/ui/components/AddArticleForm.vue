@@ -1,15 +1,15 @@
 <template>
-  <form v-if="!message" class="form" @submit.prevent="handleSubmit">
-    <label>
-      Title
-      <input v-model="form.title" type="text" />
-    </label>
-    <label>
-      Slug
-      <input v-model="form.slug" type="text" />
-    </label>
-    <textarea v-model="form.body" rows="10" />
-    <input type="submit" class="submit" value="Submit new post" />
+  <form v-if="!message" @submit.prevent="handleSubmit">
+    <ma-layout columns="6 6 - 12" gap="small">
+      <input-validation-provider rules="required">
+        <ma-text-field label="Title" v-model="form.title" type="text" />
+      </input-validation-provider>
+      <input-validation-provider rules="required">
+        <ma-text-field label="Slug" v-model="form.slug" type="text" />
+      </input-validation-provider>
+      <textarea v-model="form.body" rows="10" />
+      <ma-button class="submit">Submit new post</ma-button>
+    </ma-layout>
   </form>
   <p v-else>
     {{ message }}
@@ -60,16 +60,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped>
-.form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-}
-
-.submit {
-  cursor: pointer;
-  font-size: 1rem;
-}
-</style>

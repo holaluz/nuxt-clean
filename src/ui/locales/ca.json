@@ -1,12 +1,12 @@
 {
   "required": "obligatori",
-  "field_errors": {
-    "minLength": "La llargada ha de tenir un mínim de {minLength} caràcters",
-    "maxLength": "La llargada màxima és de {maxLength} caràcters",
+  "fieldErrors": {
+    "minLength": "El camp és massa curt",
+    "maxLength": "El camp és massa llarga",
     "noNumb": "El camp ha d'incloure un valor numèric",
     "required": "El camp es obligatori",
     "confirmed": "Els camps no coincideixen"
   },
   "password": "Contrasenya",
-  "repeat_password": "Repetir contrasenya"
+  "repeatPassword": "Repetir contrasenya"
 }

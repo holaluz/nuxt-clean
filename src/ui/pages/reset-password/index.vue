@@ -1,25 +1,44 @@
 <template>
   <div class="container">
-    <validation-observer v-slot="{ invalid, handleSubmit }">
-      <form class="form" @submit.prevent="handleSubmit(onSubmit)">
-        <text-input
-          id="basePassword"
-          v-model="password"
-          rules="required|password"
-          :label="$t('password')"
-          :bails="false"
-          type="text"
-        />
-        <text-input
-          v-model="repeatedPassword"
-          rules="required|password|confirmed:basePassword"
-          :label="$t('repeat_password')"
-          :bails="false"
-          type="text"
-        />
-        <ma-button class="submit" :disabled="invalid">
-          Reset Password
-        </ma-button>
+    <validation-observer v-slot="{ valid, handleSubmit }">
+      <form @submit.prevent="handleSubmit(onSubmit)">
+        <ma-stack space="medium">
+          <input-validation-provider
+            :bails="false"
+            rules="required"
+            vid="basePassword"
+          >
+            <ma-text-field
+              v-model="password"
+              :label="$t('password')"
+              type="text"
+            />
+          </input-validation-provider>
+          <input-validation-provider
+            :bails="false"
+            rules="required|confirmed:basePassword"
+          >
+            <ma-text-field
+              v-model="repeatedPassword"
+              :label="$t('repeatPassword')"
+              type="text"
+            />
+          </input-validation-provider>
+          <!--
+          TODO: How can we improve form state handling? This looks verbose and
+                prone to errors. Also, the UX is not super great because you need
+                to feel both fields before getting "local" errors in any of them.
+          -->
+          <ma-alert
+            v-if="passwordError && valid"
+            :text="passwordError"
+            type="error"
+            title="Error"
+          />
+          <ma-button :disabled="!!passwordError || !valid">
+            Reset Password
+          </ma-button>
+        </ma-stack>
       </form>
     </validation-observer>
   </div>
@@ -27,19 +46,37 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import TextInput from '@ui/components/TextInput'
 import { ValidationObserver } from 'vee-validate'
+import {
+  createPassword,
+  passwordMinLength,
+} from '@@/src/modules/password/domain'
 
 export default Vue.extend({
   name: 'ResetPassword',
 
-  components: { TextInput, ValidationObserver },
+  components: { ValidationObserver },
 
   data() {
     return {
       password: '',
       repeatedPassword: '',
     }
+  },
+
+  computed: {
+    passwordError(): null | string {
+      if (!this.password) return null
+
+      const result = createPassword(this.password).mapErr((parseError) =>
+        parseError
+          .getErrors()
+          .map((error) => this.$t(`fieldErrors.${error.message}`))
+          .join(',')
+      )
+
+      return result.isErr() ? result.error : null
+    },
   },
 
   methods: {
@@ -59,16 +96,5 @@ html {
   padding-top: 2rem;
   margin: 0 auto;
   max-width: 60ch;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-}
-
-.submit {
-  cursor: pointer;
-  font-size: 1rem;
 }
 </style>

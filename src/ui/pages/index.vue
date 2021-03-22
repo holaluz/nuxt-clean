@@ -1,13 +1,19 @@
 <template>
-  <div class="container">
-    <h3 style="margin: 3rem 0 1rem">Demo for createArticle</h3>
-    <add-article-form />
+  <ma-stack class="container" space="3x-large">
+    <ma-stack space="medium">
+      <ma-heading size="medium" level="1">Demo for createArticle</ma-heading>
+      <add-article-form />
+    </ma-stack>
 
-    <h3 style="margin: 4rem 0 1rem">Demo for getRecentArticles</h3>
-    <p v-if="error">Error: {{ error }}</p>
-    <p v-else-if="loading">Loading…</p>
-    <article-list v-else :articles="articles" />
-  </div>
+    <ma-stack space="medium">
+      <ma-heading size="medium" level="1">
+        Demo for getRecentArticles
+      </ma-heading>
+      <p v-if="error">Error: {{ error }}</p>
+      <p v-else-if="loading">Loading…</p>
+      <article-list v-else :articles="articles" />
+    </ma-stack>
+  </ma-stack>
 </template>
 
 <script lang="ts">
@@ -36,7 +42,7 @@ html {
 }
 
 .container {
-  margin: 0 auto;
+  margin: 4rem auto 0;
   max-width: 60ch;
 }
 </style>

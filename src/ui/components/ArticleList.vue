@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <ma-stack space="large">
     <article v-for="article in articles" :key="article.title">
-      <b>{{ article.title }}</b>
-      <p>{{ article.body }}</p>
-      <br />
+      <ma-stack space="small">
+        <ma-heading size="xsmall">{{ article.title }}</ma-heading>
+        <ma-text size="small">{{ article.body }}</ma-text>
+      </ma-stack>
     </article>
-  </div>
+  </ma-stack>
 </template>
 
 <script lang="ts">

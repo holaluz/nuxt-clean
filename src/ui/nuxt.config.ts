@@ -27,6 +27,18 @@ const config: NuxtConfig = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  /**
+   * Includes the nuxt/components dependencies and auto import components
+   * (defined in ~/components) when used in templates.
+   * https://github.com/nuxt/components
+   */
+  components: [
+    {
+      path: '~/components',
+      extensions: ['ts'],
+    },
+  ],
+
   /*
    ** Nuxt.js dev-modules
    */
