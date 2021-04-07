@@ -61,7 +61,11 @@ const config: NuxtConfig = {
     ],
   ],
 
-  plugins: ['./plugins/veeValidate', './plugins/margarita'],
+  plugins: [
+    './plugins/veeValidate',
+    './plugins/margarita',
+    './plugins/mockServiceWorker',
+  ],
 
   build: {
     transpile: ['vee-validate/dist/rules'],
