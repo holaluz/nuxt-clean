@@ -10,7 +10,7 @@ import { resetPassword as makeResetpassword } from '@modules/password/applicatio
 
 // Dotenv or something
 enum ENDPOINTS {
-  CORE = 'https://jsonplaceholder.typicode.com',
+  CORE = 'https://core-staging.holaluz.com',
 }
 
 const coreHttpService = new HttpService(ENDPOINTS.CORE)
