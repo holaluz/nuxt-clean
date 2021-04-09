@@ -1,23 +1,17 @@
 import { rest } from 'msw'
-import { Article, mockArticle, mockArticles } from '../domain'
+import { mockArticles } from '../domain'
 import * as ArticleDTO from './ArticleParser'
 
 export const ArticleServiceMock = [
-  rest.post<Article, ArticleDTO.IArticleDTO>(
-    /\/create-article/,
-    (_, res, ctx) => {
-      return res(ctx.json(ArticleDTO.fromDomain(mockArticle())))
-    }
-  ),
+  rest.post<ArticleDTO.IArticleDTO>(/\/create-article/, (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json({ ...req.body, isFavorited: false }))
+  }),
 
-  rest.get<Article[], ArticleDTO.IArticleDTO[]>(
-    /\/get-recent-articles/,
-    (_, res, ctx) => {
-      const articlesDTO = mockArticles().map((article) =>
-        ArticleDTO.fromDomain(article)
-      )
+  rest.get<ArticleDTO.IArticleDTO[]>(/\/get-recent-articles/, (_, res, ctx) => {
+    const articlesDTO = mockArticles().map((article) =>
+      ArticleDTO.fromDomain(article)
+    )
 
-      return res(ctx.json(articlesDTO))
-    }
-  ),
+    return res(ctx.json(articlesDTO))
+  }),
 ]
