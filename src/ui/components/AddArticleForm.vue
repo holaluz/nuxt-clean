@@ -39,7 +39,7 @@ export default Vue.extend({
     async handleSubmit() {
       await createArticle.execute(
         {
-          editingArticle: this.form,
+          editingArticle: { ...this.form, createdAt: new Date() },
         },
         {
           respondWithSuccess: () => {
