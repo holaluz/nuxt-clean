@@ -1,4 +1,4 @@
-import { Article } from './article.types'
+import { Article, EditingArticle } from './article.types'
 
 export const mockArticle = (): Article => ({
   title: 'lorem ipsum',
@@ -24,3 +24,10 @@ export const mockArticles = (): Article[] => [
     favorited: true,
   },
 ]
+
+export const mockEditingArticle = (): EditingArticle => ({
+  title: 'lorem ipsum',
+  slug: 'lorem-ipsum',
+  body: 'lorem ipsum',
+  createdAt: new Date(),
+})
