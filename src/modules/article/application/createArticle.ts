@@ -31,10 +31,7 @@ export function createArticle({
       respondWithGenericError,
     }: Callbacks
   ) {
-    const result = await articleService.createArticle({
-      ...editingArticle,
-      createdAt: new Date(),
-    })
+    const result = await articleService.createArticle(editingArticle)
 
     if (result.isErr()) {
       const error = result.error
