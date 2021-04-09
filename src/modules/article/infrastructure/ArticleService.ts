@@ -21,7 +21,7 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
     }
 
     const result = await httpService.get<ArticleDTO.IArticleDTO[], Article[]>(
-      { url: '/posts' },
+      { url: '/get-recent-articles' },
       { parseTo }
     )
 
@@ -33,7 +33,7 @@ export function ArticleService(httpService: IHttpService): IArticleRepository {
 
     const result = await httpService.post<ArticleDTO.IArticleDTO, Article>(
       {
-        url: '/posts',
+        url: '/create-article',
         data: parsedArticle,
       },
       {
