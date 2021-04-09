@@ -51,10 +51,12 @@ export function getRecentArticles({
         // Example 2.1 - Error management with some cool helpers
         if (isHttpError(error)) {
           if (error.isClientError()) {
+            console.log('CLIENT ERROR')
             respondWithClientError(error)
             return
           }
 
+          console.log('SERVER ERROR')
           respondWithServerError(error)
         }
 
@@ -81,9 +83,9 @@ export function getRecentArticles({
 
     // Example 3 - Declarative version with Result.fold()
     // Notice that this version FORCES you to handle the error callback
-    result.fold(
-      (articleList) => console.log(articleList),
-      (error) => console.warn(error)
-    )
+    // result.fold(
+    //   (articleList) => console.log(articleList),
+    //   (error) => console.warn(error)
+    // )
   }
 }
