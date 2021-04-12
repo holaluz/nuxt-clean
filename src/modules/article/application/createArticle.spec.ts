@@ -1,5 +1,5 @@
 import { HttpService } from '@@/src/shared/http/HttpService'
-import { mockServer } from '@shared/service.mock'
+import { mockServer } from '@@/src/shared/mockService'
 import { ArticleService as makeArticleService } from '../infrastructure/ArticleService'
 import { ArticleServiceMock } from '../infrastructure/ArticleService.mock'
 import { mockEditingArticle } from '../domain'
