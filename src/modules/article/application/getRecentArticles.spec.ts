@@ -1,5 +1,5 @@
-import { HttpError } from '@shared/http/HttpError'
 import { rest } from 'msw'
+import { HttpError } from '@shared/http/HttpError'
 import { HttpService } from '@@/src/shared/http/HttpService'
 import { mockServer } from '@@/src/shared/mockService'
 import { ArticleService as makeArticleService } from '../infrastructure/ArticleService'
@@ -36,8 +36,8 @@ test('responds with success', async () => {
   )
 })
 
-test.skip('responds with server error', async () => {
-  const serverError = new HttpError(500, 'irrelevant')
+test('responds with server error', async () => {
+  const serverError = new HttpError(500, 'Request failed with status code 500')
   server.use(
     rest.get(/\/get-recent-articles/, (_, res, ctx) => {
       return res(ctx.status(500))
@@ -48,7 +48,24 @@ test.skip('responds with server error', async () => {
 
   expect(useCaseCallbacks.respondWithSuccess).not.toHaveBeenCalled()
   expect(useCaseCallbacks.respondWithServerError).toHaveBeenCalledTimes(1)
-  // expect(useCaseCallbacks.respondWithServerError).toHaveBeenCalledWith(
-  //   serverError
-  // )
+  expect(useCaseCallbacks.respondWithServerError).toHaveBeenCalledWith(
+    serverError
+  )
+})
+
+test('responds with client error', async () => {
+  const clientError = new HttpError(400, 'Request failed with status code 400')
+  server.use(
+    rest.get(/\/get-recent-articles/, (_, res, ctx) => {
+      return res(ctx.status(400))
+    })
+  )
+
+  await useCase.execute(null, useCaseCallbacks)
+
+  expect(useCaseCallbacks.respondWithSuccess).not.toHaveBeenCalled()
+  expect(useCaseCallbacks.respondWithClientError).toHaveBeenCalledTimes(1)
+  expect(useCaseCallbacks.respondWithClientError).toHaveBeenCalledWith(
+    clientError
+  )
 })

@@ -51,12 +51,10 @@ export function getRecentArticles({
         // Example 2.1 - Error management with some cool helpers
         if (isHttpError(error)) {
           if (error.isClientError()) {
-            console.log('CLIENT ERROR')
             respondWithClientError(error)
             return
           }
 
-          console.log('SERVER ERROR')
           respondWithServerError(error)
         }
 
