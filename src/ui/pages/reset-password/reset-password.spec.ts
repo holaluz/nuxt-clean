@@ -1,4 +1,5 @@
 import { render, fireEvent, waitFor } from '@ui/utils/nuxt-clean-test-utils'
+import userEvent from '@testing-library/user-event'
 import resetPassword from './index.vue'
 
 beforeEach(() => jest.useFakeTimers())
@@ -6,44 +7,40 @@ beforeEach(() => jest.useFakeTimers())
 describe('Reset password page', () => {
   test.each`
     inputValue       | errorName      | displayedError
-    ${'1'}           | ${'minLength'} | ${'The field should have at least 8 characters'}
-    ${''}            | ${'required'}  | ${'The field is required'}
-    ${'12345678910'} | ${'maxLength'} | ${'The field cannot have more than 10 characters'}
+    ${'1'}           | ${'minLength'} | ${'The field is too short'}
+    ${'12345678910'} | ${'maxLength'} | ${'The field is too long'}
   `(
-    `displays $errorName error when it should`,
+    `displays $errorName error when password value is '$inputValue'`,
     async ({ inputValue, displayedError }) => {
-      const { getByLabelText, findByText, getByText } = render(resetPassword)
+      const { getByLabelText, findByText, getByRole } = render(resetPassword)
 
       await fireEvent.update(getByLabelText('Password'), inputValue)
+      await fireEvent.update(getByLabelText('Repeat password'), inputValue)
 
       expect(await findByText(displayedError)).toBeInTheDocument()
-      expect(getByText(/Reset Password/i)).toBeDisabled()
+      expect(getByRole('button', { name: /Reset Password/i })).toBeDisabled()
     }
   )
 
-  test('displays confirmed error when it should', async () => {
-    const { getByLabelText, findByText, getByText } = render(resetPassword)
-
-    await fireEvent.update(getByLabelText('Repeat password'), '2')
-
-    expect(
-      await findByText(/Required fields do not match/i)
-    ).toBeInTheDocument()
-    expect(getByText(/Reset Password/i)).toBeDisabled()
-  })
-
   test('does not allow to submit form if empty', async () => {
-    const { getByText } = render(resetPassword)
+    const { getByText, getByRole, getByLabelText } = render(resetPassword)
 
-    await waitFor(() => expect(getByText(/Reset Password/i)).toBeDisabled())
+    await waitFor(() =>
+      expect(getByRole('button', { name: /Reset Password/i })).toBeDisabled()
+    )
+
+    await fireEvent.touch(getByLabelText('Password'))
+    await fireEvent.touch(getByLabelText('Repeat password'))
+
+    expect(getByText('The field is required')).toBeInTheDocument()
   })
 
-  test('submit button is enabled when form is correct', async () => {
-    const { getByLabelText, getByText } = render(resetPassword)
+  test('submit button is enabled when form is correct', () => {
+    const { debug, getByLabelText, getByRole } = render(resetPassword)
 
-    await fireEvent.update(getByLabelText('Password'), '123455678')
-    await fireEvent.update(getByLabelText('Repeat password'), '123455678')
+    userEvent.type(getByLabelText('Password'), '123455678')
+    userEvent.type(getByLabelText('Repeat password'), '123455678')
 
-    expect(getByText(/Reset Password/i)).not.toBeDisabled()
+    expect(getByRole('button', { name: /Reset Password/i })).not.toBeDisabled()
   })
 })

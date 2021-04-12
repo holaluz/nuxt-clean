@@ -28,7 +28,7 @@ export interface IHttpService {
   post<T, M>(request: IHttpRequest, parser: Parser<T, M>): HttpResult<M>
 }
 
-export class HttpService {
+export class HttpService implements IHttpService {
   private readonly axiosService: AxiosInstance
 
   constructor(baseUrl: string) {
@@ -49,7 +49,16 @@ export class HttpService {
       const response = await this.axiosService.get<T>(url, config)
       return this._parseFailable<T, M>(response.data, parser.parseTo)
     } catch (error) {
-      return err(error)
+      if (this.isAxiosError(error)) {
+        const httpError = error.response
+          ? HttpError.fromStatus(error.response.status, error.message)
+          : HttpError.fromMessage(error.message)
+
+        return err(httpError)
+      }
+
+      // Request failed due to something else. Let's treat is an exception
+      throw error
     }
   }
 
@@ -59,9 +68,19 @@ export class HttpService {
   ): HttpResult<M> {
     try {
       const response = await this.axiosService.post<T>(url, data, config)
+
       return this._parseFailable<T, M>(response.data, parser.parseTo)
     } catch (error) {
-      return err(error)
+      if (this.isAxiosError(error)) {
+        const httpError = error.response
+          ? HttpError.fromStatus(error.response.status, error.message)
+          : HttpError.fromMessage(error.message)
+
+        return err(httpError)
+      }
+
+      // Request failed due to something else. Let's treat is an exception
+      throw error
     }
   }
 
@@ -81,32 +100,25 @@ export class HttpService {
   }
 
   private _initializeRequestInterceptor() {
-    this.axiosService.interceptors.request.use(
-      this._handleRequest,
-      this._handleError
-    )
+    this.axiosService.interceptors.request.use(this._handleRequest)
   }
 
   private _initializeResponseInterceptor() {
-    this.axiosService.interceptors.response.use(
-      (response: AxiosResponse) => response,
-      this._handleError
-    )
+    this.axiosService.interceptors.response.use(this._handleResponse)
   }
 
   private _handleRequest(config: AxiosRequestConfig) {
     // get this from a cookie, or whatever
-    config.headers.Authorization = 'Bearer ...'
+    // config.headers.Authorization = 'Bearer ...'
 
     return config
   }
 
-  private _handleError(error: AxiosError): HttpError {
-    if (error.response) {
-      return HttpError.fromStatus(error.response.status, error.message)
-    }
+  private isAxiosError(error: Error): error is AxiosError {
+    return (error as AxiosError).isAxiosError !== undefined
+  }
 
-    // Otherwise resume the chain of error throws
-    throw error
+  private _handleResponse(response: AxiosResponse): AxiosResponse {
+    return response
   }
 }

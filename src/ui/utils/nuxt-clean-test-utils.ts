@@ -4,6 +4,8 @@ import VueI18n from 'vue-i18n'
 import Margarita from '@holaluz/margarita'
 import { configureVeeValidate } from '@ui/plugins/veeValidate'
 
+import InputValidationProvider from '@ui/components/InputValidationProvider'
+
 import locales from '@ui/locales/en.json'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -38,6 +40,9 @@ const render: typeof VTLrender = (
     (localVue, ...args) => {
       localVue.use(VueI18n)
       localVue.use(Margarita)
+
+      // TODO: How to handle this situation with nuxt' /components autoimporter?
+      localVue.component('input-validation-provider', InputValidationProvider)
 
       const i18n = new VueI18n({
         locale: 'en',
