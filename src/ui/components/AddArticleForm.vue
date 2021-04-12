@@ -2,10 +2,10 @@
   <form v-if="!message" @submit.prevent="handleSubmit">
     <ma-layout columns="6 6 - 12" gap="small">
       <input-validation-provider rules="required">
-        <ma-text-field label="Title" v-model="form.title" type="text" />
+        <ma-text-field v-model="form.title" label="Title" type="text" />
       </input-validation-provider>
       <input-validation-provider rules="required">
-        <ma-text-field label="Slug" v-model="form.slug" type="text" />
+        <ma-text-field v-model="form.slug" label="Slug" type="text" />
       </input-validation-provider>
       <textarea v-model="form.body" rows="10" />
       <ma-button class="submit">Submit new post</ma-button>
@@ -39,7 +39,7 @@ export default Vue.extend({
     async handleSubmit() {
       await createArticle.execute(
         {
-          editingArticle: { ...this.form, createdAt: new Date() },
+          editingArticle: this.form,
         },
         {
           respondWithSuccess: () => {

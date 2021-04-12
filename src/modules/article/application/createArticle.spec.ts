@@ -22,12 +22,24 @@ const useCaseCallbacks = {
 
 const editingArticle = mockEditingArticle()
 
+beforeAll(() => {
+  jest.useFakeTimers('modern')
+  jest.setSystemTime(new Date().getTime())
+})
+
+afterAll(() => {
+  jest.useRealTimers()
+})
+
 test('createArticle method is called', async () => {
   const spiedMethod = jest.spyOn(articleService, 'createArticle')
   await useCase.execute({ editingArticle }, useCaseCallbacks)
 
   expect(articleService.createArticle).toHaveBeenCalledTimes(1)
-  expect(articleService.createArticle).toHaveBeenCalledWith(editingArticle)
+  expect(articleService.createArticle).toHaveBeenCalledWith({
+    ...editingArticle,
+    createdAt: new Date(),
+  })
   spiedMethod.mockRestore()
 })
 
