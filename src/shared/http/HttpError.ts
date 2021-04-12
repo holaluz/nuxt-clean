@@ -31,6 +31,10 @@ export class HttpError extends Error implements IHttpError {
   public static fromStatus(status: number, message?: string) {
     return new this(status, message)
   }
+
+  public static fromMessage(message: string, status = 400) {
+    return new this(status, message)
+  }
 }
 
 export const isHttpError = (e: Error): e is HttpError => {

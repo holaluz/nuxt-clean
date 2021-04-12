@@ -37,8 +37,8 @@ export class HttpService implements IHttpService {
       headers: { 'Content-Type': 'application/json' },
     })
 
-    this.initializeRequestInterceptor()
-    this.initializeResponseInterceptor()
+    this._initializeRequestInterceptor()
+    this._initializeResponseInterceptor()
   }
 
   public async get<T, M>(
@@ -47,10 +47,14 @@ export class HttpService implements IHttpService {
   ): HttpResult<M> {
     try {
       const response = await this.axiosService.get<T>(url, config)
-      return this.parseFailable<T, M>(response.data, parser.parseTo)
+      return this._parseFailable<T, M>(response.data, parser.parseTo)
     } catch (error) {
-      if (this.isAxiosError(error) && error.response) {
-        return err(HttpError.fromStatus(error.response.status, error.message))
+      if (this.isAxiosError(error)) {
+        const httpError = error.response
+          ? HttpError.fromStatus(error.response.status, error.message)
+          : HttpError.fromMessage(error.message)
+
+        return err(httpError)
       }
 
       // Request failed due to something else. Let's treat is an exception
@@ -65,10 +69,14 @@ export class HttpService implements IHttpService {
     try {
       const response = await this.axiosService.post<T>(url, data, config)
 
-      return this.parseFailable<T, M>(response.data, parser.parseTo)
+      return this._parseFailable<T, M>(response.data, parser.parseTo)
     } catch (error) {
-      if (this.isAxiosError(error) && error.response) {
-        return err(HttpError.fromStatus(error.response.status, error.message))
+      if (this.isAxiosError(error)) {
+        const httpError = error.response
+          ? HttpError.fromStatus(error.response.status, error.message)
+          : HttpError.fromMessage(error.message)
+
+        return err(httpError)
       }
 
       // Request failed due to something else. Let's treat is an exception
@@ -76,7 +84,7 @@ export class HttpService implements IHttpService {
     }
   }
 
-  private parseFailable<T, M>(
+  private _parseFailable<T, M>(
     data: T,
     parser: FailableParser<T, M>
   ): Result<M, ParseError> {
@@ -91,26 +99,26 @@ export class HttpService implements IHttpService {
     }
   }
 
-  private initializeRequestInterceptor() {
-    this.axiosService.interceptors.request.use(this.handleRequest)
+  private _initializeRequestInterceptor() {
+    this.axiosService.interceptors.request.use(this._handleRequest)
   }
 
-  private initializeResponseInterceptor() {
-    this.axiosService.interceptors.response.use(this.handleResponse)
+  private _initializeResponseInterceptor() {
+    this.axiosService.interceptors.response.use(this._handleResponse)
   }
 
-  private handleRequest(config: AxiosRequestConfig) {
+  private _handleRequest(config: AxiosRequestConfig) {
     // get this from a cookie, or whatever
     // config.headers.Authorization = 'Bearer ...'
 
     return config
   }
 
-  private handleResponse(response: AxiosResponse): AxiosResponse {
-    return response
-  }
-
   private isAxiosError(error: Error): error is AxiosError {
     return (error as AxiosError).isAxiosError !== undefined
+  }
+
+  private _handleResponse(response: AxiosResponse): AxiosResponse {
+    return response
   }
 }
