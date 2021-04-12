@@ -1,3 +1,5 @@
+import { rest } from 'msw'
+import { HttpError } from '@shared/http/HttpError'
 import { HttpService } from '@@/src/shared/http/HttpService'
 import { mockServer } from '@@/src/shared/mockService'
 import { ArticleService as makeArticleService } from '../infrastructure/ArticleService'
@@ -9,7 +11,7 @@ const mockHttpService = new HttpService('irrelevant')
 const articleService = makeArticleService(mockHttpService)
 const useCase = makeGetRecentArticles({ articleService })
 
-mockServer(...ArticleServiceMock)
+const server = mockServer(...ArticleServiceMock)
 
 const useCaseCallbacks = {
   respondWithSuccess: jest.fn(),
@@ -32,4 +34,38 @@ test('createArticle method is called', async () => {
 test('responds with success', async () => {
   await useCase.execute({ editingArticle }, useCaseCallbacks)
   expect(useCaseCallbacks.respondWithSuccess).toHaveBeenCalledTimes(1)
+})
+
+test('responds with server error', async () => {
+  const serverError = new HttpError(500, 'Request failed with status code 500')
+  server.use(
+    rest.post(/\/create-article/, (_, res, ctx) => {
+      return res(ctx.status(500))
+    })
+  )
+
+  await useCase.execute({ editingArticle }, useCaseCallbacks)
+
+  expect(useCaseCallbacks.respondWithSuccess).not.toHaveBeenCalled()
+  expect(useCaseCallbacks.respondWithServerError).toHaveBeenCalledTimes(1)
+  expect(useCaseCallbacks.respondWithServerError).toHaveBeenCalledWith(
+    serverError
+  )
+})
+
+test('responds with client error', async () => {
+  const clientError = new HttpError(400, 'Request failed with status code 400')
+  server.use(
+    rest.post(/\/create-article/, (_, res, ctx) => {
+      return res(ctx.status(400))
+    })
+  )
+
+  await useCase.execute({ editingArticle }, useCaseCallbacks)
+
+  expect(useCaseCallbacks.respondWithSuccess).not.toHaveBeenCalled()
+  expect(useCaseCallbacks.respondWithClientError).toHaveBeenCalledTimes(1)
+  expect(useCaseCallbacks.respondWithClientError).toHaveBeenCalledWith(
+    clientError
+  )
 })
