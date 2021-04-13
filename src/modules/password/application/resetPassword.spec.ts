@@ -11,44 +11,42 @@ const useCase = makeResetpassword({
 })
 
 const useCaseCallbacks = {
-  respondWithSuccess: jest.fn(),
-  respondWithParseError: jest.fn(),
-  respondWithClientError: jest.fn(),
-  respondWithServerError: jest.fn(),
-  respondWithGenericError: jest.fn(),
+  onSuccess: jest.fn(),
+  onParseError: jest.fn(),
+  onClientError: jest.fn(),
+  onServerError: jest.fn(),
+  onGenericError: jest.fn(),
 }
 
 describe('Reset Password use case', () => {
   describe('invalid password string is passed as entry param', () => {
     const password = '1234567'
-    test('respondWithParseError callback is triggered when cannot create password', () => {
+    test('onParseError callback is triggered when cannot create password', () => {
       useCase.execute({ password }, useCaseCallbacks)
 
-      expect(useCaseCallbacks.respondWithParseError).toHaveBeenCalledTimes(1)
+      expect(useCaseCallbacks.onParseError).toHaveBeenCalledTimes(1)
       expect(passwordService.resetPassword).not.toHaveBeenCalled()
     })
   })
 
   describe('valid password string is passed as entry param', () => {
     const password = '12345678'
-    test('respondWithSuccess callback is triggered when everything goes right', async () => {
+    test('onSuccess callback is triggered when everything goes right', async () => {
       passwordService.resetPassword.mockResolvedValue(ok(password))
       await useCase.execute({ password }, useCaseCallbacks)
 
       expect(passwordService.resetPassword).toHaveBeenCalledTimes(1)
-      expect(useCaseCallbacks.respondWithSuccess).toHaveBeenCalledTimes(1)
+      expect(useCaseCallbacks.onSuccess).toHaveBeenCalledTimes(1)
     })
 
-    test('respondWithClientError callback is trigger when client error', async () => {
+    test('onClientError callback is trigger when client error', async () => {
       const clientError = new HttpError(404, 'irrelevant')
       passwordService.resetPassword.mockResolvedValue(err(clientError))
       await useCase.execute({ password }, useCaseCallbacks)
 
       expect(passwordService.resetPassword).toHaveBeenCalledTimes(1)
-      expect(useCaseCallbacks.respondWithClientError).toHaveBeenCalledTimes(1)
-      expect(useCaseCallbacks.respondWithClientError).toHaveBeenCalledWith(
-        clientError
-      )
+      expect(useCaseCallbacks.onClientError).toHaveBeenCalledTimes(1)
+      expect(useCaseCallbacks.onClientError).toHaveBeenCalledWith(clientError)
     })
   })
 })

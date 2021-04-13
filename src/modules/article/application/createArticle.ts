@@ -11,10 +11,10 @@ type Services = {
 }
 
 type Callbacks = {
-  respondWithSuccess: () => void
-  respondWithClientError: (e: HttpError) => void
-  respondWithServerError: (e: HttpError) => void
-  respondWithGenericError: (e: Error) => void
+  onSuccess: () => void
+  onClientError: (e: HttpError) => void
+  onServerError: (e: HttpError) => void
+  onGenericError: (e: Error) => void
 }
 
 export function createArticle({
@@ -24,12 +24,7 @@ export function createArticle({
 
   async function execute(
     { editingArticle }: Parameters,
-    {
-      respondWithSuccess,
-      respondWithClientError,
-      respondWithServerError,
-      respondWithGenericError,
-    }: Callbacks
+    { onSuccess, onClientError, onServerError, onGenericError }: Callbacks
   ) {
     const result = await articleService.createArticle({
       ...editingArticle,
@@ -40,19 +35,19 @@ export function createArticle({
       const error = result.error
 
       if (!isHttpError(error)) {
-        respondWithGenericError(error)
+        onGenericError(error)
         return
       }
 
       if (error.isClientError()) {
-        respondWithClientError(error)
+        onClientError(error)
         return
       }
 
-      respondWithServerError(error)
+      onServerError(error)
       return
     }
 
-    respondWithSuccess()
+    onSuccess()
   }
 }

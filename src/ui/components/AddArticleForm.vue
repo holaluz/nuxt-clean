@@ -42,16 +42,16 @@ export default Vue.extend({
           editingArticle: this.form,
         },
         {
-          respondWithSuccess: () => {
+          onSuccess: () => {
             this.message = `Everything went better than expected`
           },
-          respondWithClientError: (e) => {
+          onClientError: (e) => {
             this.message = `I fucked it up: ${e.message}`
           },
-          respondWithServerError: (e) => {
+          onServerError: (e) => {
             this.message = `They fucked it up: ${e.message}`
           },
-          respondWithGenericError: (e) => {
+          onGenericError: (e) => {
             this.message = `This is fucked up: ${e.message}`
           },
         }
