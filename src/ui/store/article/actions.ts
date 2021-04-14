@@ -15,16 +15,16 @@ const actions: ActionTree<RootState, RootState> = {
     await sleep(2000)
 
     await getRecentArticles.execute(null, {
-      respondWithSuccess: (articles) => {
+      onSuccess: (articles) => {
         commit(MutationTypes.GET_RECENT_ARTICLES_SUCCESS, articles)
       },
-      respondWithClientError: (error) => {
+      onClientError: (error) => {
         commit(
           MutationTypes.GET_RECENT_ARTICLES_ERROR,
           `oops I fucked up with a ${error.status} error!: ${error.message}`
         )
       },
-      respondWithServerError: (error) => {
+      onServerError: (error) => {
         commit(
           MutationTypes.GET_RECENT_ARTICLES_ERROR,
           `heheeh it is on them ${error.name}`

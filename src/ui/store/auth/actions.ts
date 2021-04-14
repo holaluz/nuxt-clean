@@ -12,19 +12,19 @@ const actions: ActionTree<RootState, RootState> = {
     await resetPassword.execute(
       { password },
       {
-        respondWithSuccess: () => {
+        onSuccess: () => {
           console.log('Reset password requested')
         },
-        respondWithParseError: () => {
+        onParseError: () => {
           console.log('Invalid Password')
         },
-        respondWithClientError: (error) => {
+        onClientError: (error) => {
           console.log('ClientError', error.message)
         },
-        respondWithServerError: (error) => {
+        onServerError: (error) => {
           console.log('ServerError', error.message)
         },
-        respondWithGenericError: (error) => {
+        onGenericError: (error) => {
           console.log('GenericError', error.message)
         },
       }

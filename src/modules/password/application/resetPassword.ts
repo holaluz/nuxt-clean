@@ -11,11 +11,11 @@ type Services = {
 }
 
 type Callbacks = {
-  respondWithSuccess: () => void
-  respondWithParseError: (e: ParseError) => void
-  respondWithClientError: (e: HttpError) => void
-  respondWithServerError: (e: HttpError) => void
-  respondWithGenericError: (e: Error) => void
+  onSuccess: () => void
+  onParseError: (e: ParseError) => void
+  onClientError: (e: HttpError) => void
+  onServerError: (e: HttpError) => void
+  onGenericError: (e: Error) => void
 }
 
 export function resetPassword({
@@ -26,17 +26,17 @@ export function resetPassword({
   async function execute(
     { password }: Parameters,
     {
-      respondWithSuccess,
-      respondWithParseError,
-      respondWithClientError,
-      respondWithServerError,
-      respondWithGenericError,
+      onSuccess,
+      onParseError,
+      onClientError,
+      onServerError,
+      onGenericError,
     }: Callbacks
   ) {
     const passwordResult = createPassword(password)
 
     if (passwordResult.isErr()) {
-      respondWithParseError(passwordResult.error)
+      onParseError(passwordResult.error)
       return
     }
 
@@ -46,19 +46,19 @@ export function resetPassword({
       const error = result.error
 
       if (!isHttpError(error)) {
-        respondWithGenericError(error)
+        onGenericError(error)
         return
       }
 
       if (error.isClientError()) {
-        respondWithClientError(error)
+        onClientError(error)
         return
       }
 
-      respondWithServerError(error)
+      onServerError(error)
       return
     }
 
-    respondWithSuccess()
+    onSuccess()
   }
 }

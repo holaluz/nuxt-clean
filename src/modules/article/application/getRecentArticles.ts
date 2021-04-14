@@ -9,9 +9,9 @@ type Services = {
 
 type Parameters = null
 type Callbacks = {
-  respondWithSuccess: (articles: Article[]) => void
-  respondWithClientError: (e: HttpError) => void
-  respondWithServerError: (e: HttpError) => void
+  onSuccess: (articles: Article[]) => void
+  onClientError: (e: HttpError) => void
+  onServerError: (e: HttpError) => void
 }
 
 export function getRecentArticles({
@@ -21,11 +21,7 @@ export function getRecentArticles({
 
   async function execute(
     _: Parameters,
-    {
-      respondWithSuccess,
-      respondWithClientError,
-      respondWithServerError,
-    }: Callbacks
+    { onSuccess, onClientError, onServerError }: Callbacks
   ) {
     const result = await articleService.getRecentArticles()
 
@@ -35,7 +31,7 @@ export function getRecentArticles({
     //   console.error(result.error)
     // } else {
     //   const articles: Article[] = result.value
-    //   respondWithSuccess(articles)
+    //   onSuccess(articles)
     //   console.log(articles)
     // }
 
@@ -45,17 +41,17 @@ export function getRecentArticles({
         // The type annotation (Article[]) is unnecessary here but I've
         // included it for clarity.
         const articles: Article[] = articleList
-        respondWithSuccess(articles)
+        onSuccess(articles)
       })
       .mapErr((error) => {
         // Example 2.1 - Error management with some cool helpers
         if (isHttpError(error)) {
           if (error.isClientError()) {
-            respondWithClientError(error)
+            onClientError(error)
             return
           }
 
-          respondWithServerError(error)
+          onServerError(error)
         }
 
         // Example 2.2 - We can also iterate on error constructor
