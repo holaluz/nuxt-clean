@@ -14,7 +14,7 @@ and that's it.
 ## Development
 ```bash
 # serve with hot reload at localhost:3000
-$ npm run dev
+$ npm start
 
 # run tests in watch mdoe
 $ npm run test:watch
