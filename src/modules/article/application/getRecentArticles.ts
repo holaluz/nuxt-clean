@@ -77,9 +77,9 @@ export function getRecentArticles({
 
     // Example 3 - Declarative version with Result.fold()
     // Notice that this version FORCES you to handle the error callback
-    result.fold(
-      (articleList) => console.log(articleList),
-      (error) => console.warn(error)
-    )
+    // result.fold(
+    //   (articleList) => console.log(articleList),
+    //   (error) => console.warn(error)
+    // )
   }
 }

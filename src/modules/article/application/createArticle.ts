@@ -28,7 +28,7 @@ export function createArticle({
   ) {
     const result = await articleService.createArticle({
       ...editingArticle,
-      createdAt: new Date(),
+      createdAt: new Date(), // Business logic requires that a new article must have a created date
     })
 
     if (result.isErr()) {

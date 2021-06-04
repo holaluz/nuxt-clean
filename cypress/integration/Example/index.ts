@@ -10,12 +10,10 @@ Given('I open the application', () => {
 Then('I see a a list of articles', () => {
   cy.findByRole('heading', { level: 3, name: /Demo for getRecentArticles/i })
 
-  cy.get('article').should('have.length', 100)
+  cy.get('article').should('have.length', 2)
 })
 
 When('I submit form', () => {
-  cy.intercept('POST', /\/posts/).as('createPost')
-
   cy.findByLabelText(/title/i).type(title)
   cy.findByLabelText(/slug/i).type(slug)
 
@@ -24,9 +22,4 @@ When('I submit form', () => {
 
 Then('a new article is created', () => {
   cy.findByText(/Everything went better than expected/i)
-
-  cy.wait('@createPost').should(({ response }) => {
-    expect(response?.statusCode).to.equal(201)
-    expect(response?.body).to.include({ title, slug })
-  })
 })
